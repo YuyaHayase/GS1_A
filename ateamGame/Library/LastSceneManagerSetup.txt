@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/Scenes/def.unity
+- path: Assets/Scenes/yosida/WaveTest.unity
   isLoaded: 1
   isActive: 1
