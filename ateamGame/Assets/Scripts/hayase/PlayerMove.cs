@@ -6,9 +6,20 @@ public class PlayerMove : MonoBehaviour {
 
     // アナログスティック
     Vector2 Axis;
+
+    // 武器
     GameObject _child;
+
+    // ジャンプしているか
     bool jumping = false;
-    float jumpPower = 5;
+    float delta = 0;
+
+    // ジャンプ力
+    [SerializeField, Tooltip("ジャンプ力ぅ......ですかね")]
+    float jumpPower = 2;
+
+    [SerializeField, Tooltip("重力")]
+    float Gravity = 9.8f;
 
 	// Use this for initialization
 	void Start () {
@@ -26,11 +37,19 @@ public class PlayerMove : MonoBehaviour {
 				t:時間(ジャンプしてからのフレーム数。)
 				g:重力加速度(9.8が一般的ですが、1ピクセル当たりの換算距離によります)
         */
-        if (Input.GetKeyDown("joystick button 1")) Debug.Log("joystick");
+        if (Input.GetKeyDown("joystick button 1")) jumping=true;
         if (jumping)
         {
-            py = jumpPower - (9.8f * Mathf.Pow(Time.time, 2) / 2);
-            Debug.Log(py);
+            delta += Time.deltaTime;
+            py = jumpPower - (Gravity * Mathf.Pow(delta, 2) / 2);
+            //Debug.Log(py);
+        }
+        if (-4 > transform.position.y)
+        {
+            transform.position = new Vector2(transform.position.x, -4);
+            py = 0;
+            delta = 0;
+            jumping = false;
         }
 
         Axis.x = Input.GetAxis("Horizontal") / 5.0f;
