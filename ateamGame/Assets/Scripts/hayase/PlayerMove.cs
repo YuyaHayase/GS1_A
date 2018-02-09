@@ -17,8 +17,13 @@ public class PlayerMove : MonoBehaviour {
     float underLine = -4;
 
     // ジャンプ力
+    float jumpPower = 0;
+
     [SerializeField, Tooltip("ジャンプ力ぅ......ですかね")]
-    float jumpPower = 2;
+    float HighjumpPower = 0.5f;
+
+    [SerializeField, Tooltip("集中時のジャンプ力")]
+    float ZoneInjumpPower = 0.05f;
 
     [SerializeField, Tooltip("重力")]
     float Gravity = 9.8f;
@@ -54,9 +59,18 @@ public class PlayerMove : MonoBehaviour {
         if (Input.GetKeyDown(jsr.GetPlayBtn(JoyStickReceiver.PlayStationContoller.Cross))) jumping=true;
         if (jumping)
         {
-            delta += Time.deltaTime;
+            // 集中時ゆっくりになる？やつ
+            if (Input.GetKey(jsr.GetPlayBtn(JoyStickReceiver.PlayStationContoller.L1)))
+            {
+                jumpPower = ZoneInjumpPower;
+                delta += Time.deltaTime / 15.0f;
+            }
+            else
+            {
+                jumpPower = HighjumpPower;
+                delta += Time.deltaTime;
+            }
             py = jumpPower - (Gravity * Mathf.Pow(delta, 2) / 2);
-            //Debug.Log(py);
         }
 
         // 最低ラインにキたら

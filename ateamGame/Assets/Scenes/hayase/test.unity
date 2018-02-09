@@ -157,8 +157,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   underLine: -4
-  jumpPower: 0.5
+  HighjumpPower: 0.5
+  ZoneInjumpPower: 0.08
   Gravity: 9.8
+  joyLeftAxisComp: 5
+  joyRightAxisAccel: 1.5
 --- !u!114 &460921906
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -471,6 +474,8 @@ GameObject:
   m_Component:
   - component: {fileID: 957157674}
   - component: {fileID: 957157675}
+  - component: {fileID: 957157676}
+  - component: {fileID: 957157677}
   m_Layer: 0
   m_Name: humer
   m_TagString: Untagged
@@ -530,11 +535,46 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 4.49, y: 5.58}
+  m_Size: {x: 1.6, y: 1.6}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
+--- !u!58 &957157676
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 957157673}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 1
+--- !u!50 &957157677
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 957157673}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &1029438026
 GameObject:
   m_ObjectHideFlags: 0
