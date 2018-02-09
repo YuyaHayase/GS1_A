@@ -55,6 +55,10 @@ public class PlayerMove : MonoBehaviour {
 			g:重力加速度(9.8が一般的ですが、1ピクセル当たりの換算距離によります)
         */
 
+        // 集中時以外武器の判定を消す
+        if (Input.GetKey(jsr.GetPlayBtn(JoyStickReceiver.PlayStationContoller.L1))) _child.SetActive(true);
+        else _child.SetActive(false);
+        
         // ×ボタンが押されたら
         if (Input.GetKeyDown(jsr.GetPlayBtn(JoyStickReceiver.PlayStationContoller.Cross))) jumping=true;
         if (jumping)
@@ -70,7 +74,9 @@ public class PlayerMove : MonoBehaviour {
                 jumpPower = HighjumpPower;
                 delta += Time.deltaTime;
             }
+
             py = jumpPower - (Gravity * Mathf.Pow(delta, 2) / 2);
+            Debug.Log(py);
         }
 
         // 最低ラインにキたら
