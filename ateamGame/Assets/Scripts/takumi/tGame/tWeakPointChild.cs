@@ -18,7 +18,6 @@ public class tWeakPointChild : MonoBehaviour
     {
         if (col.gameObject.tag == "weapon")
         {
-            Debug.Log(transform.root.gameObject.name);
             _tWeakPoint.WeponHit(dirPosition);
         }
     }

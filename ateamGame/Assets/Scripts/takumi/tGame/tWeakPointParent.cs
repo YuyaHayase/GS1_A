@@ -26,7 +26,6 @@ public class tWeakPointParent : MonoBehaviour
         {
             //武器が通り抜けたよ
             isHit = false;
-            Debug.Log("攻撃抜け");
         }
     }
 
