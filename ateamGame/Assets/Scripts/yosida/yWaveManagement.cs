@@ -3,63 +3,110 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class yWaveManagement : MonoBehaviour {
-    enum topRow : int { ID = 0,Stage,Wave,Pos,Time};
+    enum topRow : int { ID = 0, Stage, Wave, Pos, Time };
 
-    public SpriteRenderer enemyA, enemyB, enemyC;
+    [SerializeField]
+    SpriteRenderer enemyA, enemyB, enemyC, particle;
+    SpriteRenderer enemy;
 
-    Vector3[] enemyPos;
+  Vector3[] enemyPos;
 
     int i = 0, j = 0;
     int stageNumber = 1;
     int waveNumber = 1;
-    int[] enemyNumber = new int[3];//Wave毎ごとの敵の数
-    int[] enemyAppearanceTime;//敵が出てくる時間
-    int number;
-
-
+    public int[] enemyNumber = new int[3];//Wave毎ごとの敵の数、死んだら減っていく
+    float[] enemyAppearanceTime;//敵が出てくる時間
+    int number;//そのWave毎ごとに出現する敵の数、出現したら減っていく
     float time = 0;
+    int wholeNumber;
+
+    bool flgNumber = true;
+    bool flgBoss = false;
+
 
     string[] enemyID;
     yCsvRender csv;
-	// Use this for initialization
-	void Start () {
+
+    public int WaveNumber
+    {
+        set { waveNumber = value; }
+        get { return waveNumber; }
+    }
+    // Use this for initialization
+    void Start() {
         csv = GameObject.Find("Reference").GetComponent<yCsvRender>();
 
         EnemyNumber((int)topRow.Wave);
-        number = enemyNumber[0] + enemyNumber[1] + enemyNumber[2];
 
         EnemyTime((int)topRow.Time);
         EnemyPos((int)topRow.Pos);
         EnemyID((int)topRow.ID);
-
+        number = enemyNumber[0];
+        wholeNumber = enemyNumber[0] + enemyNumber[1] + enemyNumber[2];
+        StartCoroutine("BossAppearance");
 
     }
 
     // Update is called once per frame
-    void Update () {
-        time += Time.deltaTime;
+    void Update()
+    {
+        time+=Time.deltaTime;
+        print(flgNumber);
 
-        //if (time >= enemyAppearance
-        //    Time[i] && i < number)
-        //{
-        //    if (enemyID[i] == "A")
-        //        Instantiate(enemyA, enemyPos[i], Quaternion.identity);
-        //    if (enemyID[i] == "B")
-        //        Instantiate(enemyB, enemyPos[i], Quaternion.identity);
-        //    i++;
-        //    print(i);
-        //    print(number);
-        //    if (i == enemyNumber[j])
-        //    {
-        //        time = 0;
-        //        j++;
-        //        enemyNumber[j] += i;
-        //    }
-        //}
+        if (waveNumber < 3)//ボス戦前のWave数まで
+        {
+            if (flgNumber && j < 2)
+            {
+                if (time >= enemyAppearanceTime[i])//時間になったら生成
+                {
+                    while (true)
+                    {
+                        switch (enemyID[i])
+                        {
+                            case "A":
+                                enemy = Instantiate(enemyA, enemyPos[i], Quaternion.identity) as SpriteRenderer;
+                                enemy.name = enemyID[i] + number;
+                                break;
+                            case "B":
+                                enemy = Instantiate(enemyB, enemyPos[i], Quaternion.identity) as SpriteRenderer;
+                                enemy.name = enemyID[i] + number;
+                                break;
+                            case "C":
+                                enemy = Instantiate(enemyC, enemyPos[i], Quaternion.identity) as SpriteRenderer;
+                                enemy.name = enemyID[i] + number;
+                                break;
+                        }
+                        i++;
+                        number--;
+
+                        if (i == wholeNumber)//全ての敵が出現し終えたら(1～3Wave)
+                            break;
+                        else if (enemyAppearanceTime[i - 1] == enemyAppearanceTime[i])//今作ったものと次作る秒数が一緒っだったらもう一度
+                            continue;
+                        else
+                            break;
+                    }
+                }
+            }
+            if (number == 0)//そのWaveに出てくる敵の出現がなくなったら
+                flgNumber = false;
+
+            if (enemyNumber[j] == 0 && j < 2)//そのWaveの敵が全て死んだら
+            {
+                waveNumber++;
+                time = 0;
+                if (j < 1)
+                    j++;
+                else
+                    flgBoss = true;
+                number = enemyNumber[j];
+                flgNumber = true;
+            }
+        }
 
     }
 
-    private void EnemyNumber(int x)//Wave毎ごとの敵の数
+      private void EnemyNumber(int x)//Wave毎ごとの敵の数
     {
         for(int y = 1;y < csv.wave.Count; y++)
         {
@@ -83,50 +130,44 @@ public class yWaveManagement : MonoBehaviour {
 
     private void EnemyTime(int x)//Wave毎ごとの敵の出てくる時間
     {
-        enemyAppearanceTime = new int[number];
+        int i = 0;
+        int number = enemyNumber[0] + enemyNumber[1] + enemyNumber[2];
+        enemyAppearanceTime = new float[number];
 
         for (int y = 1; y < csv.wave.Count; y++)
         {
             if (int.Parse(csv.wave[y][(int)topRow.Stage]) == stageNumber)//ステージの確認
             {
-                switch (int.Parse(csv.wave[y][x]))
-                {
-                    case 1:
-                        enemyAppearanceTime[0] += 1;
-                        break;
-                    case 2:
-                        enemyAppearanceTime[1] += 1;
-                        break;
-                    case 3:
-                        enemyAppearanceTime[2] += 1;
-                        break;
-                }
+                enemyAppearanceTime[i] = float.Parse(csv.wave[y][(int)topRow.Time]);
+                i++;
             }
         }
     }
-
-
     private void EnemyPos(int x)//敵の位置の初期化
     {
         int i = 0;
+        int number = enemyNumber[0] + enemyNumber[1] + enemyNumber[2];
         enemyPos = new Vector3[number];
 
         for (int y = 1; y < csv.wave.Count; y++)
         {
             if (int.Parse(csv.wave[y][(int)topRow.Stage]) == stageNumber)//ステージの確認
             {
+                Vector3 cameraPos = Camera.main.transform.position;
+                float rangeX = Random.Range(-2, 3);
+                float rangeY = Random.Range(-5, 5);
                 switch (csv.wave[y][x])
                 {
                     case "左":
-                        enemyPos[i] = new Vector3(-5.0f,0,0);
+                        enemyPos[i] = new Vector3(cameraPos.x - 5.0f, cameraPos.y,0);
                         i++;
                         break;
                     case "右":
-                        enemyPos[i] = new Vector3(5.0f, 0, 0);
+                        enemyPos[i] = new Vector3(cameraPos.x + 5.0f, cameraPos.y, 0);
                         i++;
                         break;
                     default:
-                        string[] pos = csv.wave[y][x].Split(',');
+                        string[] pos = csv.wave[y][x].Split('/');
                         enemyPos[i] = new Vector3(float.Parse(pos[0]), float.Parse(pos[1]), 0);
                         i++;
                         break;
@@ -138,6 +179,8 @@ public class yWaveManagement : MonoBehaviour {
     private void EnemyID(int x)//敵のIDの初期化
     {
         int i = 0;
+        int number = enemyNumber[0] + enemyNumber[1] + enemyNumber[2];
+
         enemyID = new string[number];
 
         for (int y = 1; y < csv.wave.Count; y++)
@@ -148,21 +191,19 @@ public class yWaveManagement : MonoBehaviour {
                 i++;
             }
         }
-
     }
 
-    IEnumerator fun1()
+    IEnumerator BossAppearance()
     {
-        while (true)
-        {
-            if(time == enemyAppearanceTime[i])
-            {
+        yield return new WaitUntil(() => flgBoss);
+        yield return new WaitForSeconds(1.0f);
 
-            }
+        Instantiate(particle, new Vector3(0, 0, 0), Quaternion.identity);
+        yield return new WaitForSeconds(1.0f);
 
-            yield return new WaitForSeconds(1.0f);
-            time += 1;
-        }
+        enemy = Instantiate(enemyC, enemyPos[i], Quaternion.identity) as SpriteRenderer;
+        enemy.name = enemyID[i] + number;
+
         yield break;
     }
 }

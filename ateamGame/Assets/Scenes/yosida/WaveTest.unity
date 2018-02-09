@@ -123,7 +123,7 @@ GameObject:
   - component: {fileID: 961203668}
   - component: {fileID: 961203667}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: Wave
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -142,7 +142,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyA: {fileID: 212419326807467160, guid: b7c2262184cf9e449b800d68e1527eb6, type: 2}
   enemyB: {fileID: 212808020788426488, guid: 6cc1fa21a4d037a46b763afb10f78662, type: 2}
-  enemyC: {fileID: 0}
+  enemyC: {fileID: 212246614939452076, guid: 07472cfb8363aab44ad8356a17be190e, type: 2}
+  particle: {fileID: 212656194603717998, guid: eb70229a170b4e244b292e3375b76713, type: 2}
+  enemyNumber: 000000000000000000000000
 --- !u!4 &961203668
 Transform:
   m_ObjectHideFlags: 0
