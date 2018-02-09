@@ -1,9 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class JoyStickReceiver : MonoBehaviour {
 
+    [SerializeField, Tooltip("デバック")]
+    private bool IsDebug = true;
+
+    [SerializeField, Tooltip("画面表示")]
+    Text KeyDisp;
+
+    // ボタン列挙
     public enum PlayStationContoller
     {
         Square,
@@ -22,6 +30,7 @@ public class JoyStickReceiver : MonoBehaviour {
         TrackPad
     }
 	
+    // ボタンの番号取得
     public string GetPlayBtn(PlayStationContoller s)
     {
         string jbc = "0";
@@ -68,100 +77,74 @@ public class JoyStickReceiver : MonoBehaviour {
                 break;
             case PlayStationContoller.TrackPad:
                 jbc = "13";
-                break;
+                break;                
         }
         return "joystick button " + jbc;
     }
 
-    void Update()
+    // start
+    void Start()
     {
-        DisplayButtonName();
+
     }
 
-    public void DisplayButtonName()
+    // update
+    void Update()
     {
-        // □ボタン
-        if (Input.GetKey(GetPlayBtn(PlayStationContoller.Square)))
+        if (IsDebug && Input.anyKeyDown)
         {
-            Debug.Log(PlayStationContoller.Square);
+            KeyDisp.text = DisplayButtonName() + "\n" + KeyDisp.text;
+            DisplayButtonName();
         }
+    }
+
+    // ボタンが押された時
+    public string DisplayButtonName()
+    {
+        PlayStationContoller ps = PlayStationContoller.Share;
+
+        // □ボタン
+        if (Input.GetKey(GetPlayBtn(PlayStationContoller.Square))) ps = PlayStationContoller.Square;
 
         // ×
-        if (Input.GetKey(GetPlayBtn(PlayStationContoller.Cross)))
-        {
-            Debug.Log(PlayStationContoller.Cross);
-        }
+        if (Input.GetKey(GetPlayBtn(PlayStationContoller.Cross))) ps = PlayStationContoller.Cross;
 
         // ◯
-        if (Input.GetKey(GetPlayBtn(PlayStationContoller.Circle)))
-        {
-            Debug.Log(PlayStationContoller.Circle);
-        }
+        if (Input.GetKey(GetPlayBtn(PlayStationContoller.Circle))) ps = PlayStationContoller.Circle;
 
         // △
-        if (Input.GetKey(GetPlayBtn(PlayStationContoller.Triangle)))
-        {
-            Debug.Log(PlayStationContoller.Triangle);
-        }
+        if (Input.GetKey(GetPlayBtn(PlayStationContoller.Triangle))) ps = PlayStationContoller.Triangle;
 
         // L1
-        if (Input.GetKey(GetPlayBtn(PlayStationContoller.L1)))
-        {
-            Debug.Log(PlayStationContoller.L1);
-        }
+        if (Input.GetKey(GetPlayBtn(PlayStationContoller.L1))) ps = PlayStationContoller.L1;
 
         // R1
-        if (Input.GetKey(GetPlayBtn(PlayStationContoller.R1)))
-        {
-            Debug.Log(PlayStationContoller.R1);
-        }
+        if (Input.GetKey(GetPlayBtn(PlayStationContoller.R1))) ps = PlayStationContoller.R1;
 
         // L2
-        if (Input.GetKey(GetPlayBtn(PlayStationContoller.L2)))
-        {
-            Debug.Log(PlayStationContoller.L2);
-        }
+        if (Input.GetKey(GetPlayBtn(PlayStationContoller.L2))) ps = PlayStationContoller.L2;
 
         // R2
-        if (Input.GetKey(GetPlayBtn(PlayStationContoller.R2)))
-        {
-            Debug.Log(PlayStationContoller.R2);
-        }
+        if (Input.GetKey(GetPlayBtn(PlayStationContoller.R2))) ps = PlayStationContoller.R2;
 
         // L3
-        if (Input.GetKey(GetPlayBtn(PlayStationContoller.L3)))
-        {
-            Debug.Log(PlayStationContoller.L3);
-        }
+        if (Input.GetKey(GetPlayBtn(PlayStationContoller.L3))) ps = PlayStationContoller.L3;
 
         // R3
-        if (Input.GetKey(GetPlayBtn(PlayStationContoller.R3)))
-        {
-            Debug.Log(PlayStationContoller.R3);
-        }
+        if (Input.GetKey(GetPlayBtn(PlayStationContoller.R3))) ps = PlayStationContoller.R3;
 
         // Share
-        if (Input.GetKey(GetPlayBtn(PlayStationContoller.Share)))
-        {
-            Debug.Log(PlayStationContoller.Share);
-        }
+        if (Input.GetKey(GetPlayBtn(PlayStationContoller.Share))) ps = PlayStationContoller.Share;
 
         // Option
-        if (Input.GetKey(GetPlayBtn(PlayStationContoller.Option)))
-        {
-            Debug.Log(PlayStationContoller.Option);
-        }
+        if (Input.GetKey(GetPlayBtn(PlayStationContoller.Option))) ps = PlayStationContoller.Option;
 
         // PSButton
-        if (Input.GetKey(GetPlayBtn(PlayStationContoller.PSButton)))
-        {
-            Debug.Log(PlayStationContoller.PSButton);
-        }
+        if (Input.GetKey(GetPlayBtn(PlayStationContoller.PSButton))) ps = PlayStationContoller.PSButton;
 
         // TrackPad
-        if (Input.GetKey(GetPlayBtn(PlayStationContoller.TrackPad)))
-        {
-            Debug.Log(PlayStationContoller.TrackPad);
-        }
+        if (Input.GetKey(GetPlayBtn(PlayStationContoller.TrackPad))) ps = PlayStationContoller.TrackPad;
+
+        return GetPlayBtn(ps) + " " + ps.ToString();
     }
 }
