@@ -9,7 +9,7 @@ public class yWaveManagement : MonoBehaviour {
     SpriteRenderer enemyA, enemyB, enemyC, particle;
     SpriteRenderer enemy;
 
-    Vector3[] enemyPos;
+  Vector3[] enemyPos;
 
     int i = 0, j = 0;
     int stageNumber = 1;
@@ -105,7 +105,8 @@ public class yWaveManagement : MonoBehaviour {
         }
 
     }
-    private void EnemyNumber(int x)//Wave毎ごとの敵の数
+
+      private void EnemyNumber(int x)//Wave毎ごとの敵の数
     {
         for(int y = 1;y < csv.wave.Count; y++)
         {
@@ -142,7 +143,6 @@ public class yWaveManagement : MonoBehaviour {
             }
         }
     }
-
     private void EnemyPos(int x)//敵の位置の初期化
     {
         int i = 0;
@@ -180,6 +180,7 @@ public class yWaveManagement : MonoBehaviour {
     {
         int i = 0;
         int number = enemyNumber[0] + enemyNumber[1] + enemyNumber[2];
+
         enemyID = new string[number];
 
         for (int y = 1; y < csv.wave.Count; y++)
@@ -202,6 +203,7 @@ public class yWaveManagement : MonoBehaviour {
 
         enemy = Instantiate(enemyC, enemyPos[i], Quaternion.identity) as SpriteRenderer;
         enemy.name = enemyID[i] + number;
+
         yield break;
     }
 }

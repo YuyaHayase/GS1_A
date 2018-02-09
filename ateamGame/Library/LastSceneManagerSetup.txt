@@ -1,0 +1,4 @@
+sceneSetups:
+- path: Assets/Scenes/yosida/WaveTest.unity
+  isLoaded: 1
+  isActive: 1

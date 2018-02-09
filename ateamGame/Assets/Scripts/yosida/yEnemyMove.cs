@@ -6,11 +6,11 @@ public class yEnemyMove : MonoBehaviour {
 
     int type;
     bool flgInCamera = false;
-
     yWaveManagement waveManagement;
 	// Use this for initialization
 	void Start () {
         waveManagement = GameObject.Find("Wave").GetComponent<yWaveManagement>();
+
 
         if (Camera.main.transform.position.x > transform.position.x)
             type = 1;
@@ -31,6 +31,7 @@ public class yEnemyMove : MonoBehaviour {
             transform.Translate(-0.5f, 0, 0);
         else
             transform.Translate(0, -0.1f, 0);
+
 	}
 
     private void OnBecameInvisible()
