@@ -13,6 +13,8 @@ public class PlayerMove : MonoBehaviour {
     // ジャンプしているか
     bool jumping = false;
     float delta = 0;
+    [SerializeField,Tooltip("最低ライン")]
+    float underLine = -4;
 
     // ジャンプ力
     [SerializeField, Tooltip("ジャンプ力ぅ......ですかね")]
@@ -21,9 +23,21 @@ public class PlayerMove : MonoBehaviour {
     [SerializeField, Tooltip("重力")]
     float Gravity = 9.8f;
 
-	// Use this for initialization
-	void Start () {
+    //ジョイスティック
+    JoyStickReceiver jsr;
+
+    //ジョイスティックの制限
+    [SerializeField, Tooltip("左スティック(ボタン)の制限係数")]
+    float joyLeftAxisComp = 5.0f;
+    [SerializeField, Tooltip("右スティックの加速係数")]
+    float joyRightAxisAccel = 1.5f;
+
+    // Use this for initialization
+    void Start () {
+        // 子オブジェクトの取得
         _child = transform.FindChild("humer").gameObject;
+
+        jsr = new JoyStickReceiver();
 	}
 	
 	// Update is called once per frame
@@ -31,40 +45,49 @@ public class PlayerMove : MonoBehaviour {
         float py = 0;
         /*
         y = Vo*t - (g*t^2)/2
-				当の公式を利用します。
-
-				Vo:初速(jumpPowerに分類されるところ)
-				t:時間(ジャンプしてからのフレーム数。)
-				g:重力加速度(9.8が一般的ですが、1ピクセル当たりの換算距離によります)
+            Vo:初速(jumpPowerに分類されるところ)
+			t:時間(ジャンプしてからのフレーム数。)
+			g:重力加速度(9.8が一般的ですが、1ピクセル当たりの換算距離によります)
         */
-        if (Input.GetKeyDown("joystick button 1")) jumping=true;
+
+        // ×ボタンが押されたら
+        if (Input.GetKeyDown(jsr.GetPlayBtn(JoyStickReceiver.PlayStationContoller.Cross))) jumping=true;
         if (jumping)
         {
             delta += Time.deltaTime;
             py = jumpPower - (Gravity * Mathf.Pow(delta, 2) / 2);
             //Debug.Log(py);
         }
-        if (-4 > transform.position.y)
+
+        // 最低ラインにキたら
+        if (underLine > transform.position.y)
         {
-            transform.position = new Vector2(transform.position.x, -4);
+            transform.position = new Vector2(transform.position.x, underLine);
             py = 0;
             delta = 0;
             jumping = false;
         }
 
-        Axis.x = Input.GetAxis("Horizontal") / 5.0f;
+        // アクシスの調整 左ステック
+        if (Input.GetAxis("Horizontal") == 0) Axis.x = Input.GetAxis("The Cross Key LeftRight") / joyLeftAxisComp;
+        else Axis.x = Input.GetAxis("Horizontal") / joyLeftAxisComp;
         transform.position += new Vector3(Axis.x, py, 0);
 
-        float RightX = Input.GetAxis("Horizontal R") * 1.5f;
-        float RightY = -Input.GetAxis("Vertical R") * 1.5f;
+        // アクシスの調整 右ステック
+        float RightX = Input.GetAxis("Horizontal R") * joyRightAxisAccel;
+        float RightY = -Input.GetAxis("Vertical R") * joyRightAxisAccel;
 
+        // 武器の座標
         _child.transform.position = new Vector3(transform.position.x + RightX,
                                                 transform.position.y + RightY,
                                                 0);
 
+        // 角度調節
         float rot = Mathf.Atan2(_child.transform.position.y - transform.position.y,
                                 _child.transform.position.x - transform.position.x);
-        if (RightX == 0&&RightY==0) _child.transform.rotation = Quaternion.AngleAxis(45,Vector3.forward);
+
+        // 右スティックが入力されてないなら
+        if (RightX == 0 && RightY==0) _child.transform.rotation = Quaternion.AngleAxis(45,Vector3.forward);
         else _child.transform.rotation = Quaternion.Euler(0.0f, 0.0f, rot * Mathf.Rad2Deg-90);
     }
 }
