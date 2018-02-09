@@ -5,7 +5,7 @@ using UnityEngine;
 public class tWeakPointChild : MonoBehaviour
 {
     [SerializeField, HeaderAttribute("コライダ場所(0左,1右,2下,3上)")]
-    private int position;
+    private int dirPosition;
     private tWeakPointParent _tWeakPoint;
 
     void Start()
@@ -18,7 +18,8 @@ public class tWeakPointChild : MonoBehaviour
     {
         if (col.gameObject.tag == "weapon")
         {
-            
+            Debug.Log(transform.root.gameObject.name);
+            _tWeakPoint.WeponHit(dirPosition);
         }
     }
 }
