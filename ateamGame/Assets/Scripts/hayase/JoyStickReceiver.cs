@@ -85,7 +85,13 @@ public class JoyStickReceiver : MonoBehaviour {
     // start
     void Start()
     {
+        /*
+        GameObject g = transform.FindChild("humer").gameObject;
 
+        Renderer r = g.GetComponent<Renderer>();
+        r.material.EnableKeyword("_EMISSION");
+        r.material.SetColor("_EmissionColor", new Color(1,0.5f,0));
+        */
     }
 
     // update
