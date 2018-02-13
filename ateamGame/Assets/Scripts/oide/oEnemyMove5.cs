@@ -9,15 +9,15 @@ public class oEnemyMove5 : MonoBehaviour {
     GameObject player;
     float angle = 0.0f;//プレイヤーと自身(Enemy)の角度
     float time = 0.0f;
-    public int max;//角度の最大値
     public int min;//角度の最小値
+    public int max;//角度の最大値
     public int way;//拡散弾をいくつに分けるか
     public int enemyMode = 1;//Playerをロックオンするかしないかの判定。1ならする、2ならしない。
     int [] ii = new int[30];//何度間隔で弾を配置するかの記憶場所
     float x, y;//ベクトルx.y
     // Use this for initialization
     void Start () {
-        player = GameObject.Find("Enemy1");//使うときはPlayerに変える
+        player = GameObject.Find("Player");//使うときはPlayerに変える
         if(enemyMode == 1)
         {
             BulletAngle(transform.position, player.transform.position);//角度を計算するメソッドに値を入れる
