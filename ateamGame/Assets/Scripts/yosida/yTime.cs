@@ -13,7 +13,7 @@ public class yTime : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        number = Resources.LoadAll<Sprite>("yosida/Number");
+        number = Resources.LoadAll<Sprite>("yResources/Number");
         timeImage[0] = GameObject.Find("Time5").GetComponent<Image>();
         timeImage[1] = GameObject.Find("Time4").GetComponent<Image>();
         timeImage[2] = GameObject.Find("Time3").GetComponent<Image>();
