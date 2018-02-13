@@ -24,7 +24,7 @@ public class yCombo : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        number = Resources.LoadAll<Sprite>("yosida/Number");
+        number = Resources.LoadAll<Sprite>("yResources/Number");
         comboNumber[0] = GameObject.Find("ComboNumber1").GetComponent<Image>();
         comboNumber[1] = GameObject.Find("ComboNumber2").GetComponent<Image>();
         comboNumber[2] = GameObject.Find("ComboNumber3").GetComponent<Image>();
