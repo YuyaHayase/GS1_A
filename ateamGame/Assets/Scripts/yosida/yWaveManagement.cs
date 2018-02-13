@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class yWaveManagement : MonoBehaviour {
     enum topRow : int { ID = 0, Stage, Wave, Pos, Time };
@@ -14,6 +15,8 @@ public class yWaveManagement : MonoBehaviour {
     int i = 0, j = 0;
     int stageNumber = 1;
     int waveNumber = 1;
+
+    [System.NonSerialized]
     public int[] enemyNumber = new int[3];//Wave毎ごとの敵の数、死んだら減っていく
     float[] enemyAppearanceTime;//敵が出てくる時間
     int number;//そのWave毎ごとに出現する敵の数、出現したら減っていく
@@ -43,6 +46,7 @@ public class yWaveManagement : MonoBehaviour {
         EnemyID((int)topRow.ID);
         number = enemyNumber[0];
         wholeNumber = enemyNumber[0] + enemyNumber[1] + enemyNumber[2];
+        print(wholeNumber);
         StartCoroutine("BossAppearance");
 
     }
@@ -79,7 +83,7 @@ public class yWaveManagement : MonoBehaviour {
                         i++;
                         number--;
 
-                        if (i == wholeNumber)//全ての敵が出現し終えたら(1～3Wave)
+                        if (i >= wholeNumber)//全ての敵が出現し終えたら(1～3Wave)
                             break;
                         else if (enemyAppearanceTime[i - 1] == enemyAppearanceTime[i])//今作ったものと次作る秒数が一緒っだったらもう一度
                             continue;
@@ -106,7 +110,7 @@ public class yWaveManagement : MonoBehaviour {
 
     }
 
-      private void EnemyNumber(int x)//Wave毎ごとの敵の数
+    private void EnemyNumber(int x)//Wave毎ごとの敵の数
     {
         for(int y = 1;y < csv.wave.Count; y++)
         {
@@ -143,6 +147,7 @@ public class yWaveManagement : MonoBehaviour {
             }
         }
     }
+
     private void EnemyPos(int x)//敵の位置の初期化
     {
         int i = 0;
@@ -198,12 +203,53 @@ public class yWaveManagement : MonoBehaviour {
         yield return new WaitUntil(() => flgBoss);
         yield return new WaitForSeconds(1.0f);
 
-        Instantiate(particle, new Vector3(0, 0, 0), Quaternion.identity);
+        yield return StartCoroutine("BossPerformance");
+        yield return StartCoroutine("BossPerformanceText");
+        //Instantiate(particle, new Vector3(0, 0, 0), Quaternion.identity);
         yield return new WaitForSeconds(1.0f);
 
         enemy = Instantiate(enemyC, enemyPos[i], Quaternion.identity) as SpriteRenderer;
         enemy.name = enemyID[i] + number;
 
+        yield break;
+    }
+
+    IEnumerator BossPerformance()
+    {
+        Image bossPerformance = GameObject.Find("Image").GetComponent<Image>();
+        int i = 0;
+        while (i < 3)
+        {
+            float alpha = 146.0f / 255.0f;
+            bossPerformance.color = new Color(1, 0, 0, alpha);
+            yield return new WaitForSeconds(0.3f);
+            while (alpha >= 0)
+            {
+                alpha -= 0.1f;
+                bossPerformance.color = new Color(1, 0, 0, alpha);
+                yield return new WaitForSeconds(0.08f);
+            }
+            yield return new WaitForSeconds(0.5f);
+            bossPerformance.color = new Color(1, 0, 0, 0);
+            yield return new WaitForSeconds(0.03f);
+            i++;
+        }
+        yield break;
+    }
+    IEnumerator BossPerformanceText()
+    {
+        Text[] text = new Text[6];
+
+        for (int i = 0; i < text.Length; i++)
+        {
+            int j = i + 1;
+            text[i] = GameObject.Find("Text" + j).GetComponent<Text>();
+            text[i].color = new Color(0, 0, 0, 1);
+        }
+        yield return new WaitForSeconds(1.0f);
+
+        for (int i = 0; i < text.Length; i++)
+            text[i].color = new Color(0, 0, 0, 0);
         yield break;
     }
 }
