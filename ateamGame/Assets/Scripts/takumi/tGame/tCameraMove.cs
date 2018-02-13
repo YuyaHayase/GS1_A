@@ -10,6 +10,9 @@ public class tCameraMove : MonoBehaviour
     [SerializeField]
     private float xMax, xMin, yMax, yMin;
 
+    [SerializeField]
+    private float yPosDown;
+
     void Start()
     {
         player = GameObject.Find("Player");
@@ -29,6 +32,7 @@ public class tCameraMove : MonoBehaviour
         else if (yPlayerPos >= yMax) yPos = yMax;
         else yPos = yPlayerPos;
 
-        transform.position = new Vector3(xPos,yPos,-10);
+        transform.position = new Vector3(xPos, yPos - yPosDown, -10);
     }
 }
+ 

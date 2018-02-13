@@ -1,14 +1,19 @@
 fileFormatVersion: 2
-guid: ccfafff52006ed44cba40d0b0b10e19e
-timeCreated: 1518482998
+guid: cfd609ad27e8f1a41933e9982d797976
+timeCreated: 1518144363
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: Player_or_Enemy_0
-    21300002: Player_or_Enemy_1
-    21300004: Player_or_Enemy_2
-    21300006: Player_or_Enemy_3
-    21300008: Player_or_Enemy_4
+    21300000: Number_01
+    21300002: Number_02
+    21300004: Number_03
+    21300006: Number_04
+    21300008: Number_05
+    21300010: Number_06
+    21300012: Number_07
+    21300014: Number_08
+    21300016: Number_09
+    21300018: Number_00
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -85,69 +90,139 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Player_or_Enemy_0
+      name: Number_01
       rect:
         serializedVersion: 2
-        x: 0
-        y: 196
-        width: 175
-        height: 174
+        x: 33
+        y: 123
+        width: 20
+        height: 50
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Player_or_Enemy_1
+      name: Number_02
       rect:
         serializedVersion: 2
-        x: 338
-        y: 196
-        width: 174
-        height: 174
+        x: 68
+        y: 123
+        width: 33
+        height: 50
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Player_or_Enemy_2
+      name: Number_03
       rect:
         serializedVersion: 2
-        x: 536
-        y: 196
-        width: 174
-        height: 174
+        x: 112
+        y: 123
+        width: 32
+        height: 51
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Player_or_Enemy_3
+      name: Number_04
       rect:
         serializedVersion: 2
-        x: 432
-        y: 0
-        width: 175
-        height: 175
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: Player_or_Enemy_4
-      rect:
-        serializedVersion: 2
-        x: 91
-        y: 199
-        width: 82
+        x: 156
+        y: 123
+        width: 36
         height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Number_05
+      rect:
+        serializedVersion: 2
+        x: 205
+        y: 122
+        width: 30
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Number_06
+      rect:
+        serializedVersion: 2
+        x: 245
+        y: 122
+        width: 37
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Number_07
+      rect:
+        serializedVersion: 2
+        x: 287
+        y: 123
+        width: 33
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Number_08
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 55
+        width: 35
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Number_09
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 55
+        width: 36
+        height: 52
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Number_00
+      rect:
+        serializedVersion: 2
+        x: 124
+        y: 51
+        width: 35
+        height: 52
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
