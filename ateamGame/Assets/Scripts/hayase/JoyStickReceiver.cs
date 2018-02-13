@@ -27,7 +27,8 @@ public class JoyStickReceiver : MonoBehaviour {
         L3,
         R3,
         PSButton,
-        TrackPad
+        TrackPad,
+        AnotherButton
     }
 	
     // ボタンの番号取得
@@ -107,7 +108,12 @@ public class JoyStickReceiver : MonoBehaviour {
     // ボタンが押された時
     public string DisplayButtonName()
     {
-        PlayStationContoller ps = PlayStationContoller.Share;
+        return ControlButtonKeys() + " " + ControlButtonKeys().ToString();
+    }
+
+    public string ControlButtonKeys()
+    {
+        PlayStationContoller ps = PlayStationContoller.AnotherButton;
 
         // □ボタン
         if (Input.GetKey(GetPlayBtn(PlayStationContoller.Square))) ps = PlayStationContoller.Square;
@@ -151,6 +157,6 @@ public class JoyStickReceiver : MonoBehaviour {
         // TrackPad
         if (Input.GetKey(GetPlayBtn(PlayStationContoller.TrackPad))) ps = PlayStationContoller.TrackPad;
 
-        return GetPlayBtn(ps) + " " + ps.ToString();
+        return GetPlayBtn(ps);
     }
 }
