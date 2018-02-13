@@ -10,7 +10,7 @@ public class oEnemyBullet4 : MonoBehaviour {
     float f;
 	// Use this for initialization
 	void Start () {
-        player = GameObject.Find("Enemy1");//使うときはPlayerに変える
+        player = GameObject.Find("Player");//使うときはPlayerに変える
         BulletAngle(transform.position,player.transform.position);//角度を計算するメソッドに値を入れる
         transform.rotation = Quaternion.Euler(0, 0, angle);//角度を変える
         parabola(transform.position, player.transform.position);//
