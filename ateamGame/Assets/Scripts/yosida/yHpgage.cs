@@ -7,20 +7,20 @@ public class yHpgage : MonoBehaviour {
 
     Image hpGage, redGage;
 
-    int hp = 100;
-    bool flg = false;
+    int hp = 150, hpSave;
 
     // Use this for initialization
     void Start () {
         hpGage = GameObject.Find("hpGage").GetComponent<Image>();
         redGage = GameObject.Find("redGage").GetComponent<Image>();
+        hpSave = hp;
     }
 
     // Update is called once per frame
     void Update () {
         if (Input.GetMouseButtonDown(0))
         {
-            Damage(5);
+            Damage(75);
         }
     }
 
@@ -33,7 +33,7 @@ public class yHpgage : MonoBehaviour {
 
     private IEnumerator DamageCoroutine(int x)
     {
-        float remaining = (hp - x) / 100.0f;
+        float remaining = ((float)hp - x) / hpSave;
         hp -= x;
         while (true)
         {
@@ -60,11 +60,9 @@ public class yHpgage : MonoBehaviour {
     IEnumerator ComboEnd()
     {
         float remaining = redGage.fillAmount;
-        print("a");
+
         while (true)
         {
-            if (flg)
-                break;
             if (hpGage.fillAmount < redGage.fillAmount)
             {
                 redGage.fillAmount -= 0.01f;
