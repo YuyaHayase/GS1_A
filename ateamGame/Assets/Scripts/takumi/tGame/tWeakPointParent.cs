@@ -10,6 +10,7 @@ public class tWeakPointParent : MonoBehaviour
     [SerializeField, HeaderAttribute("弱点の向き(0左,1右,2下,3上)")]
     private int weakpointDir;
 
+    //private 
     void Start()
     {
 

@@ -399,7 +399,7 @@ GameObject:
   - component: {fileID: 770168492}
   - component: {fileID: 770168491}
   m_Layer: 0
-  m_Name: weakPouintMaster
+  m_Name: HitManagerObj
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -626,7 +626,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   underLine: -4
-  jumpPower: 0
+  HighjumpPower: 0.5
+  ZoneInjumpPower: 0.05
   Gravity: 9.8
   joyLeftAxisComp: 5
   joyRightAxisAccel: 1.5
