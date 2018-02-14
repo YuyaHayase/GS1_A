@@ -56,15 +56,15 @@ public class PlayerMove : MonoBehaviour {
         */
 
         // 集中時以外武器の判定を消す
-        if (Input.GetKey(jsr.GetPlayBtn(JoyStickReceiver.PlayStationContoller.L1))) _child.SetActive(true);
+        if (KeyConfig.GetKey("Zone")) _child.SetActive(true);
         else _child.SetActive(false);
         
         // ×ボタンが押されたら
-        if (Input.GetKeyDown(jsr.GetPlayBtn(JoyStickReceiver.PlayStationContoller.Cross))) jumping=true;
+        if (KeyConfig.GetKey("Jump")) jumping=true;
         if (jumping)
         {
             // 集中時ゆっくりになる？やつ
-            if (Input.GetKey(jsr.GetPlayBtn(JoyStickReceiver.PlayStationContoller.L1)))
+            if (KeyConfig.GetKey("Zone"))
             {
                 jumpPower = ZoneInjumpPower;
                 delta += Time.deltaTime / 15.0f;
