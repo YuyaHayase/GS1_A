@@ -468,6 +468,11 @@ Prefab:
       propertyPath: KeyDisp
       value: 
       objectReference: {fileID: 700947604}
+    - target: {fileID: 114095471736112052, guid: 50ee216c09990a54996c7a9b109606c2,
+        type: 2}
+      propertyPath: IsDebug
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 50ee216c09990a54996c7a9b109606c2, type: 2}
   m_IsPrefabParent: 0

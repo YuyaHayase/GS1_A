@@ -21,11 +21,15 @@ public class KeyConfigSettings : MonoBehaviour {
     // 保存先
     string FilePath = "";
 
+    // コントローラのモード
+    public static int mo = 0;
+
     // 初期化
     public void Init()
     {
         try
         {
+            FilePath = Application.dataPath + "/Scenes/hayase/" + Application.unityVersion + ".txt";
             jsr = new JoyStickReceiver();
 
             // ファイルからキー状態の設定を読み込む
@@ -40,9 +44,20 @@ public class KeyConfigSettings : MonoBehaviour {
             }
             Debug.Log("aa");
 
-            // 設定する
-            KeyConfig.Config["Jump"] = s[0];
-            KeyConfig.Config["Zone"] = s[1];
+            if(s[0] == "")
+            {
+                // ファイルが有っても中身が無いときのとりあえず入れとくやつ
+                KeyConfig.Config["Jump"] = jsr.GetPlayBtn(JoyStickReceiver.PlayStationContoller.Cross);
+                KeyConfig.Config["Zone"] = jsr.GetPlayBtn(JoyStickReceiver.PlayStationContoller.L1);
+            }
+            else
+            {
+                // 設定する
+                KeyConfig.Config["Jump"] = s[0];
+                KeyConfig.Config["Zone"] = s[1];
+            }
+
+            
         }
         catch (IOException e)
         {
@@ -50,6 +65,21 @@ public class KeyConfigSettings : MonoBehaviour {
             // エラー出たらとりあえず入れる
             KeyConfig.Config["Jump"] = jsr.GetPlayBtn(JoyStickReceiver.PlayStationContoller.Cross);
             KeyConfig.Config["Zone"] = jsr.GetPlayBtn(JoyStickReceiver.PlayStationContoller.L1);
+        }
+
+        SetDisp("JumpBtn", KeyConfig.Config["Jump"]);
+        SetDisp("ZoneBtn", KeyConfig.Config["Zone"]);
+    }
+
+    // キー表示
+    private void SetDisp(string Name, string txt)
+    {
+        try
+        {
+            GameObject.Find(Name).GetComponentInChildren<Text>().text = txt;
+        }catch(System.Exception e)
+        {
+            Debug.Log(e.Message);
         }
     }
 
@@ -62,9 +92,9 @@ public class KeyConfigSettings : MonoBehaviour {
     // ファイルパスの設定
     void Start()
     {
-        FilePath = Application.dataPath + "/Scenes/hayase/"+ Application.unityVersion + ".txt";
         Debug.Log(FilePath);
         Init();
+        Modes();
     }
 
     // キー取得
@@ -104,5 +134,24 @@ public class KeyConfigSettings : MonoBehaviour {
         sw.WriteLine(KeyConfig.Config["Zone"]);
         sw.Close();
         fs.Close();
+    }
+
+    // コントローラのモード
+    public void Modes()
+    {
+        mo = 1 - mo;
+        string s="";
+
+        switch (mo)
+        {
+            case 0:
+                s = "PlayStation";
+                break;
+            case 1:
+                s = "Other";
+                break;
+        }
+
+        GameObject.Find("CtrlTxt").GetComponent<Text>().text = s;
     }
 }
