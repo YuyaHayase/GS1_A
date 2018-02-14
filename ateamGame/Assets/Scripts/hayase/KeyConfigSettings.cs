@@ -35,33 +35,36 @@ public class KeyConfigSettings : MonoBehaviour {
             // ファイルからキー状態の設定を読み込む
             FileStream fs = new FileStream(FilePath, FileMode.OpenOrCreate);
             StreamReader sr = new StreamReader(fs);
-            string[] s = new string[10];
-            int cnt = 0;
-            while ((s[cnt] = sr.ReadLine()) != null)
+            ArrayList ar = new ArrayList();
+            string s;
+            while ((s = sr.ReadLine()) != null)
             {
-                Debug.Log(s[cnt]);
-                cnt++;
+                Debug.Log(s);
+                ar.Add(s);
             }
-            Debug.Log("aa");
 
-            if(s[0] == "")
+            sr.Close();
+            fs.Close();
+            if(ar.Count == 0)
             {
+                Debug.Log("とりま");
                 // ファイルが有っても中身が無いときのとりあえず入れとくやつ
                 KeyConfig.Config["Jump"] = jsr.GetPlayBtn(JoyStickReceiver.PlayStationContoller.Cross);
                 KeyConfig.Config["Zone"] = jsr.GetPlayBtn(JoyStickReceiver.PlayStationContoller.L1);
             }
             else
             {
+                Debug.Log("あるやん");
                 // 設定する
-                KeyConfig.Config["Jump"] = s[0];
-                KeyConfig.Config["Zone"] = s[1];
+                KeyConfig.Config["Jump"] = ar[0].ToString();
+                KeyConfig.Config["Zone"] = ar[1].ToString();
             }
 
             
         }
         catch (IOException e)
         {
-            Debug.Log(e.Message);
+            Debug.Log(e.Message + "エラー");
             // エラー出たらとりあえず入れる
             KeyConfig.Config["Jump"] = jsr.GetPlayBtn(JoyStickReceiver.PlayStationContoller.Cross);
             KeyConfig.Config["Zone"] = jsr.GetPlayBtn(JoyStickReceiver.PlayStationContoller.L1);

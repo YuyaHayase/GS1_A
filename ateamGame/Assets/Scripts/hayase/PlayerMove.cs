@@ -50,10 +50,10 @@ public class PlayerMove : MonoBehaviour {
         jsr = new JoyStickReceiver();
         kcs = new KeyConfigSettings();
         kcs.Init();
-	}
-	
-	// Update is called once per frame
-	void Update () {
+    }
+
+    // Update is called once per frame
+    void Update () {
         float py = 0;
         /*
         y = Vo*t - (g*t^2)/2
