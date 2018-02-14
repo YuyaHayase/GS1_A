@@ -30,6 +30,7 @@ public class PlayerMove : MonoBehaviour {
 
     //ジョイスティック
     JoyStickReceiver jsr;
+    KeyConfigSettings kcs;
 
     //ジョイスティックの制限
     [SerializeField, Tooltip("左スティック(ボタン)の制限係数")]
@@ -37,16 +38,22 @@ public class PlayerMove : MonoBehaviour {
     [SerializeField, Tooltip("右スティックの加速係数")]
     float joyRightAxisAccel = 1.5f;
 
-    // Use this for initialization
+    // コントローラ
+    [SerializeField,Tooltip("0:PlayStation, 1:Other")]
+    int CtrlSelect = 0;
+
+        // Use this for initialization
     void Start () {
         // 子オブジェクトの取得
         _child = transform.FindChild("humer").gameObject;
 
         jsr = new JoyStickReceiver();
-	}
-	
-	// Update is called once per frame
-	void Update () {
+        kcs = new KeyConfigSettings();
+        kcs.Init();
+    }
+
+    // Update is called once per frame
+    void Update () {
         float py = 0;
         /*
         y = Vo*t - (g*t^2)/2
@@ -95,7 +102,16 @@ public class PlayerMove : MonoBehaviour {
 
         // アクシスの調整 右ステック
         float RightX = Input.GetAxis("Horizontal R") * joyRightAxisAccel;
-        float RightY = -Input.GetAxis("Vertical R") * joyRightAxisAccel;
+        float RightY = -Input.GetAxis("Vertical R") * joyRightAxisAccel; ;
+        switch (KeyConfigSettings.mo)
+        {
+            case 0:
+                RightY = -Input.GetAxis("Vertical R") * joyRightAxisAccel;
+                break;
+            case 1:
+                RightY = -Input.GetAxis("Vertical Ru") * joyRightAxisAccel;
+                break;
+        }
 
         // 武器の座標
         _child.transform.position = new Vector3(transform.position.x + RightX,

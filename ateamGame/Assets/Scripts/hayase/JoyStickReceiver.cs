@@ -86,6 +86,7 @@ public class JoyStickReceiver : MonoBehaviour {
     // start
     void Start()
     {
+        
         /*
         GameObject g = transform.FindChild("humer").gameObject;
 
