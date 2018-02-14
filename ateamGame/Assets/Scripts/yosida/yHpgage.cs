@@ -5,35 +5,70 @@ using UnityEngine.UI;
 
 public class yHpgage : MonoBehaviour {
 
+    GameObject parent;
     Image hpGage, redGage;
 
-    int hp = 150, hpSave;
+    [SerializeField,Header("ここから設定するならPlayer専用")]
+    int hp = 150;
+    int maxHP;
+
+    yEnemyManager enemyManager;
 
     // Use this for initialization
     void Start () {
-        hpGage = GameObject.Find("hpGage").GetComponent<Image>();
-        redGage = GameObject.Find("redGage").GetComponent<Image>();
-        hpSave = hp;
+        //子オブジェクト取得
+        hpGage = transform.FindChild("hpGage").gameObject.GetComponent<Image>();
+        redGage = transform.FindChild("redGage").gameObject.GetComponent<Image>();
+        //親オブジェクト取得
+        parent = transform.root.gameObject;
+
+        //要はEnemyの時
+        if (parent.name != "Canvas")
+        {
+            //Enemyの時、親オブジェクトのスクリプトを取得
+            enemyManager = parent.GetComponent<yEnemyManager>();
+            hp = enemyManager.EnemyHP;
+        }
+        maxHP = hp;
     }
 
     // Update is called once per frame
     void Update () {
+        //デバッグ用
         if (Input.GetMouseButtonDown(0))
         {
-            Damage(75);
+            PlayerDamage(30);
+        }
+        if (Input.GetMouseButtonDown(1))
+        {
+            EnemyDamage(20);
         }
     }
 
-    private void Damage(int x)
+    public void PlayerDamage(int x)
     {
-        StopCoroutine("DamageCoroutine");
-        StopCoroutine("ComboEnd");
-        StartCoroutine("DamageCoroutine", x);
+        if (parent.name == "Canvas")
+        {
+            StopCoroutine("DamageCoroutine");
+            StopCoroutine("ComboEnd");
+            StartCoroutine("DamageCoroutine", x);
+        }
     }
+
+    public void EnemyDamage(int x)
+    {
+        if (parent.name != "Canvas")
+        {
+            StopCoroutine("DamageCoroutine");
+            StopCoroutine("ComboEnd");
+            StartCoroutine("DamageCoroutine", x);
+        }
+    }
+
 
     private IEnumerator DamageCoroutine(int x)
     {
-        float remaining = ((float)hp - x) / hpSave;
+        float remaining = ((float)hp - x) / maxHP;
         hp -= x;
         while (true)
         {
@@ -76,4 +111,5 @@ public class yHpgage : MonoBehaviour {
         }
         yield break;
     }
+
 }
