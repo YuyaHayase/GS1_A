@@ -10,7 +10,7 @@ public class yWaveManagement : MonoBehaviour {
     SpriteRenderer enemyA, enemyB, enemyC, particle;
     SpriteRenderer enemy;
 
-  Vector3[] enemyPos;
+    Vector3[] enemyPos;
 
     int i = 0, j = 0;
     int stageNumber = 1;
