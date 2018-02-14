@@ -96,6 +96,7 @@ public class PlayerMove : MonoBehaviour {
         }
 
         // アクシスの調整 左ステック
+        if (Input.GetAxis("Vertical") > 0) jumping = true;
         if (Input.GetAxis("Horizontal") == 0) Axis.x = Input.GetAxis("The Cross Key LeftRight") / joyLeftAxisComp;
         else Axis.x = Input.GetAxis("Horizontal") / joyLeftAxisComp;
         transform.position += new Vector3(Axis.x, py, 0);
