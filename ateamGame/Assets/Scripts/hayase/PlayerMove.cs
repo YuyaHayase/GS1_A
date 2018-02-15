@@ -83,7 +83,7 @@ public class PlayerMove : MonoBehaviour {
             }
 
             py = jumpPower - (Gravity * Mathf.Pow(delta, 2) / 2);
-            Debug.Log(py);
+            //Debug.Log(py);
         }
 
         // 最低ラインにキたら
@@ -96,6 +96,7 @@ public class PlayerMove : MonoBehaviour {
         }
 
         // アクシスの調整 左ステック
+        if (Input.GetAxis("Vertical") > 0.8f) jumping = true;
         if (Input.GetAxis("Horizontal") == 0) Axis.x = Input.GetAxis("The Cross Key LeftRight") / joyLeftAxisComp;
         else Axis.x = Input.GetAxis("Horizontal") / joyLeftAxisComp;
         transform.position += new Vector3(Axis.x, py, 0);

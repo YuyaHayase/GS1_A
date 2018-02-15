@@ -22,7 +22,7 @@ public class KeyConfigSettings : MonoBehaviour {
     string FilePath = "";
 
     // コントローラのモード
-    public static int mo = 0;
+    public static int mo;
 
     // 初期化
     public void Init()
@@ -58,9 +58,10 @@ public class KeyConfigSettings : MonoBehaviour {
                 // 設定する
                 KeyConfig.Config["Jump"] = ar[0].ToString();
                 KeyConfig.Config["Zone"] = ar[1].ToString();
+                mo = int.Parse(ar[2].ToString());
             }
 
-            
+
         }
         catch (IOException e)
         {
@@ -97,6 +98,7 @@ public class KeyConfigSettings : MonoBehaviour {
     {
         Debug.Log(FilePath);
         Init();
+        Modes();
         Modes();
     }
 
@@ -135,6 +137,7 @@ public class KeyConfigSettings : MonoBehaviour {
         StreamWriter sw = new StreamWriter(fs);
         sw.WriteLine(KeyConfig.Config["Jump"]);
         sw.WriteLine(KeyConfig.Config["Zone"]);
+        sw.WriteLine(mo);
         sw.Close();
         fs.Close();
     }
