@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 public class yHpgage : MonoBehaviour {
 
@@ -13,6 +14,7 @@ public class yHpgage : MonoBehaviour {
     int maxHP;
 
     yEnemyManager enemyManager;
+    yWaveManagement waveManagement;
 
     // Use this for initialization
     void Start () {
@@ -22,6 +24,14 @@ public class yHpgage : MonoBehaviour {
         //親オブジェクト取得
         parent = transform.root.gameObject;
 
+        try
+        {
+            waveManagement = GameObject.Find("Wave").GetComponent<yWaveManagement>();
+        }
+        catch(Exception e)
+        {
+            print("見つからない");
+        }
         //要はEnemyの時
         if (parent.name != "Canvas")
         {
@@ -106,6 +116,16 @@ public class yHpgage : MonoBehaviour {
             {
                 redGage.fillAmount = hpGage.fillAmount;
                 break;
+            }
+
+            if(redGage.fillAmount == 0)
+            {
+                if (parent.name != "Canvas")
+                {
+                    waveManagement.enemyNumber[waveManagement.WaveNumber - 1]--;
+                    Destroy(parent.gameObject);
+                }
+
             }
             yield return new WaitForSeconds(0.01f);
         }
