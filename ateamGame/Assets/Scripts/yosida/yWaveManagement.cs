@@ -4,10 +4,10 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class yWaveManagement : MonoBehaviour {
-    enum topRow : int { ID = 0, Stage, Wave, Pos, Time };
+    enum topRow : int { ID = 0, Stage, Wave, Pos, Time ,HP};
 
     [SerializeField]
-    SpriteRenderer enemyA, enemyB, enemyC, particle;
+    SpriteRenderer enemyA, enemyB, enemyC;
     SpriteRenderer enemy;
 
     Vector3[] enemyPos;
@@ -18,6 +18,7 @@ public class yWaveManagement : MonoBehaviour {
 
     [System.NonSerialized]
     public int[] enemyNumber = new int[3];//Wave毎ごとの敵の数、死んだら減っていく
+    int[] enemyHP;
     float[] enemyAppearanceTime;//敵が出てくる時間
     int number;//そのWave毎ごとに出現する敵の数、出現したら減っていく
     float time = 0;
@@ -29,6 +30,7 @@ public class yWaveManagement : MonoBehaviour {
 
     string[] enemyID;
     yCsvRender csv;
+    yEnemyManager enemyManager;
 
     public int WaveNumber
     {
@@ -44,6 +46,7 @@ public class yWaveManagement : MonoBehaviour {
         EnemyTime((int)topRow.Time);
         EnemyPos((int)topRow.Pos);
         EnemyID((int)topRow.ID);
+        EnemyHP((int)topRow.HP);
         number = enemyNumber[0];
         wholeNumber = enemyNumber[0] + enemyNumber[1] + enemyNumber[2];
         print(wholeNumber);
@@ -80,6 +83,9 @@ public class yWaveManagement : MonoBehaviour {
                                 enemy.name = enemyID[i] + number;
                                 break;
                         }
+                        enemyManager = enemy.GetComponent<yEnemyManager>();
+                        enemyManager.EnemyHP = enemyHP[i];
+
                         i++;
                         number--;
 
@@ -198,6 +204,23 @@ public class yWaveManagement : MonoBehaviour {
         }
     }
 
+    private void EnemyHP(int x)//敵のHP
+    {
+        int i = 0;
+        int number = enemyNumber[0] + enemyNumber[1] + enemyNumber[2];
+        enemyHP = new int[number];
+
+        for (int y = 1; y < csv.wave.Count; y++)
+        {
+            if (int.Parse(csv.wave[y][(int)topRow.Stage]) == stageNumber)//ステージの確認
+            {
+                enemyHP[i] = int.Parse(csv.wave[y][x]);
+                i++;
+            }
+        }
+
+    }
+
     IEnumerator BossAppearance()
     {
         yield return new WaitUntil(() => flgBoss);
@@ -205,7 +228,6 @@ public class yWaveManagement : MonoBehaviour {
 
         yield return StartCoroutine("BossPerformance");
         yield return StartCoroutine("BossPerformanceText");
-        //Instantiate(particle, new Vector3(0, 0, 0), Quaternion.identity);
         yield return new WaitForSeconds(1.0f);
 
         enemy = Instantiate(enemyC, enemyPos[i], Quaternion.identity) as SpriteRenderer;
@@ -216,7 +238,7 @@ public class yWaveManagement : MonoBehaviour {
 
     IEnumerator BossPerformance()
     {
-        Image bossPerformance = GameObject.Find("Image").GetComponent<Image>();
+        Image bossPerformance = GameObject.Find("Performance/Image").GetComponent<Image>();
         int i = 0;
         while (i < 3)
         {
@@ -243,7 +265,7 @@ public class yWaveManagement : MonoBehaviour {
         for (int i = 0; i < text.Length; i++)
         {
             int j = i + 1;
-            text[i] = GameObject.Find("Text" + j).GetComponent<Text>();
+            text[i] = GameObject.Find("Performance/Text" + j).GetComponent<Text>();
             text[i].color = new Color(0, 0, 0, 1);
         }
         yield return new WaitForSeconds(1.0f);
