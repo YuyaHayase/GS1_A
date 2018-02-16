@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
+using UnityEngine.EventSystems;
 
 public class KeyConfigSettings : MonoBehaviour {
 
@@ -23,6 +24,14 @@ public class KeyConfigSettings : MonoBehaviour {
 
     // コントローラのモード
     public static int mo;
+
+    [SerializeField, Tooltip("選択等をさせるための決定ボタン")]
+    private JoyStickReceiver.PlayStationContoller JoyStick_Submit = JoyStickReceiver.PlayStationContoller.Square;
+
+    // コントローラで決定ボタンを押した際の一瞬でボタンが決定されないようにするためのやつ
+    int ctrlmode = 0;
+    [SerializeField]
+    GameObject SelectedObj;
 
     // 初期化
     public void Init()
@@ -71,6 +80,7 @@ public class KeyConfigSettings : MonoBehaviour {
             KeyConfig.Config["Zone"] = jsr.GetPlayBtn(JoyStickReceiver.PlayStationContoller.L1);
         }
 
+        KeyConfig.Config["Submit"] = jsr.GetPlayBtn(JoyStick_Submit);
         SetDisp("JumpBtn", KeyConfig.Config["Jump"]);
         SetDisp("ZoneBtn", KeyConfig.Config["Zone"]);
     }
@@ -100,6 +110,10 @@ public class KeyConfigSettings : MonoBehaviour {
         Init();
         Modes();
         Modes();
+
+        // セレクトの初期設定
+        SelectedObj = GameObject.Find("JumpBtn");
+        EventSystem.current.SetSelectedGameObject(SelectedObj);
     }
 
     // キー取得
@@ -107,21 +121,42 @@ public class KeyConfigSettings : MonoBehaviour {
     {
         if (rKey)
         {
-            if (Input.anyKeyDown)
+            if (Input.anyKeyDown && ctrlmode == 2)
             {
                 Disp.text = jsr.ControlButtonKeys();
                 rKey = false;
                 SetKey(Id);
+                ctrlmode = 0;
             }
         }
 
+        /* キーパッドでどこを選択しているかの表示したりするやつ
+         * 決定ボタン( Playstation4 DualShock でいう □ボタンとしてる )
+         * でUIのジャンプボタンを選択させ、
+         * ジャンプボタン( Playstation4 DualShock でいう ×ボタン)
+         * で選択を解除している。
+        */
+        if (KeyConfig.GetKeyDown("Submit"))
+        {
+            if(EventSystem.current.currentSelectedGameObject != null)
+            SelectedObj = EventSystem.current.currentSelectedGameObject;
+            EventSystem.current.SetSelectedGameObject(SelectedObj);
+        }
+        if (KeyConfig.GetKeyUp("Submit") || Input.GetMouseButtonUp(0)) ctrlmode = 2;
+        if (KeyConfig.GetKeyDown("Jump"))
+        {
+            EventSystem.current.SetSelectedGameObject(null);
+            if (ctrlmode == 2) ctrlmode = 0;
+        }
     }
 
     // ボタンを押したら
     public void BtnPressed(Text t)
     {
-        rKey = true;
-        Disp = t;
+            rKey = true;
+            Disp = t;
+            Disp.text = "Press Button!";
+            ctrlmode = 1;
     }
 
     // IDの設定
