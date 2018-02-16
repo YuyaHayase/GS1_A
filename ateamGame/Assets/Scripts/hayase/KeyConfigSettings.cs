@@ -25,7 +25,7 @@ public class KeyConfigSettings : MonoBehaviour {
     // コントローラのモード
     public static int mo;
 
-    [SerializeField, Tooltip("選択等をさせるための決定ボタン")]
+    [SerializeField, Tooltip("選択等をさせるための決定ボタン"), Header("選択等をさせるための決定ボタン")]
     private JoyStickReceiver.PlayStationContoller JoyStick_Submit = JoyStickReceiver.PlayStationContoller.Square;
 
     // コントローラで決定ボタンを押した際の一瞬でボタンが決定されないようにするためのやつ
