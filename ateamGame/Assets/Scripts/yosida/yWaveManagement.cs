@@ -74,7 +74,7 @@ public class yWaveManagement : MonoBehaviour {
                             if(enemyID[i] == enemyType[k].name)
                             {
                                 SpriteRenderer enemy;
-                                enemy = Instantiate(enemyType[0], enemyPos[i], Quaternion.identity) as SpriteRenderer;
+                                enemy = Instantiate(enemyType[k], enemyPos[i], Quaternion.identity) as SpriteRenderer;
                                 enemy.name = enemyID[i] + number;
                                 enemyManager = enemy.GetComponent<yEnemyManager>();
                                 enemyManager.EnemyHP = enemyHP[i];
@@ -112,6 +112,15 @@ public class yWaveManagement : MonoBehaviour {
 
         //if (Input.GetKeyDown(KeyCode.A))
         //    yMusicManager.instance.MusicSound((int)yMusicManager.musicChip.bgm1);
+        //if (Input.GetKeyDown(KeyCode.B))
+        //    Sound((int)soundClip.se1);
+        //if (Input.GetKeyDown(KeyCode.C))
+        //    Sound((int)soundClip.se2);
+        //if (Input.GetKeyDown(KeyCode.D))
+        //    Sound((int)soundClip.se3);
+        //if (Input.GetKeyDown(KeyCode.Space))
+        //    MusicEffectStop();
+
 
     }
 
