@@ -6,9 +6,10 @@ using UnityEngine.UI;
 public class yWaveManagement : MonoBehaviour {
     enum topRow : int { ID = 0, Stage, Wave, Pos, Time ,HP};
 
+    [SerializeField,Header("csvのIDにSprite.name入れなきゃ動かないよ")]
+    SpriteRenderer[] enemyType;
     [SerializeField]
-    SpriteRenderer enemyA, enemyB, enemyC;
-    SpriteRenderer enemy;
+    SpriteRenderer bossType;
 
     Vector3[] enemyPos;
 
@@ -68,23 +69,18 @@ public class yWaveManagement : MonoBehaviour {
                 {
                     while (true)
                     {
-                        switch (enemyID[i])
+                        for(int k = 0;k < enemyType.Length; k++)
                         {
-                            case "A":
-                                enemy = Instantiate(enemyA, enemyPos[i], Quaternion.identity) as SpriteRenderer;
+                            if(enemyID[i] == enemyType[k].name)
+                            {
+                                SpriteRenderer enemy;
+                                enemy = Instantiate(enemyType[0], enemyPos[i], Quaternion.identity) as SpriteRenderer;
                                 enemy.name = enemyID[i] + number;
+                                enemyManager = enemy.GetComponent<yEnemyManager>();
+                                enemyManager.EnemyHP = enemyHP[i];
                                 break;
-                            case "B":
-                                enemy = Instantiate(enemyB, enemyPos[i], Quaternion.identity) as SpriteRenderer;
-                                enemy.name = enemyID[i] + number;
-                                break;
-                            case "C":
-                                enemy = Instantiate(enemyC, enemyPos[i], Quaternion.identity) as SpriteRenderer;
-                                enemy.name = enemyID[i] + number;
-                                break;
+                            }
                         }
-                        enemyManager = enemy.GetComponent<yEnemyManager>();
-                        enemyManager.EnemyHP = enemyHP[i];
 
                         i++;
                         number--;
@@ -98,10 +94,10 @@ public class yWaveManagement : MonoBehaviour {
                     }
                 }
             }
-            if (number == 0)//そのWaveに出てくる敵の出現がなくなったら
+            if (number <= 0)//そのWaveに出てくる敵の出現がなくなったら
                 flgNumber = false;
 
-            if (enemyNumber[j] == 0 && j < 2)//そのWaveの敵が全て死んだら
+            if (enemyNumber[j] <= 0 && j < 2)//そのWaveの敵が全て死んだら
             {
                 waveNumber++;
                 time = 0;
@@ -113,6 +109,9 @@ public class yWaveManagement : MonoBehaviour {
                 flgNumber = true;
             }
         }
+
+        //if (Input.GetKeyDown(KeyCode.A))
+        //    yMusicManager.instance.MusicSound((int)yMusicManager.musicChip.bgm1);
 
     }
 
@@ -230,8 +229,9 @@ public class yWaveManagement : MonoBehaviour {
         yield return StartCoroutine("BossPerformanceText");
         yield return new WaitForSeconds(1.0f);
 
-        enemy = Instantiate(enemyC, enemyPos[i], Quaternion.identity) as SpriteRenderer;
-        enemy.name = enemyID[i] + number;
+        SpriteRenderer boss;
+        boss = Instantiate(this.bossType, enemyPos[i], Quaternion.identity) as SpriteRenderer;
+        boss.name = enemyID[i] + number;
 
         yield break;
     }
