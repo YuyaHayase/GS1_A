@@ -8,8 +8,9 @@ public class yTime : MonoBehaviour {
     Image[] timeImage = new Image[5];
     Sprite[] number;
     int i,j;
+    [SerializeField]
     float time = 12.00f;
-
+    bool flgTime = true;//falseになると一時停止
 
 	// Use this for initialization
 	void Start () {
@@ -24,7 +25,8 @@ public class yTime : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-        time -= Time.deltaTime;
+        if(flgTime)
+            time -= Time.deltaTime;
 
         if (Mathf.Max(0.0f, time) == time)//時間が0になるまで
         {
@@ -62,5 +64,16 @@ public class yTime : MonoBehaviour {
             }
         }
 
+        #region//デバッグ用
+        if (Input.GetKeyDown(KeyCode.Return) && flgTime)
+            Timer(false);
+        else if (Input.GetKeyDown(KeyCode.Return) && !flgTime)
+            Timer(true);
+        #endregion
+    }
+
+    public void Timer(bool show)
+    {
+        flgTime = show;
     }
 }
