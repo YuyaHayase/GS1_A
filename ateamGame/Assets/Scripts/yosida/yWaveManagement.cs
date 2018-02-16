@@ -229,7 +229,6 @@ public class yWaveManagement : MonoBehaviour {
 
     }
 
-    //コルーチン
     IEnumerator BossAppearance()
     {
         yield return new WaitUntil(() => flgBoss);
