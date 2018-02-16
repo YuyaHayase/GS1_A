@@ -46,24 +46,18 @@ public class KeyConfigSettings : MonoBehaviour {
             StreamReader sr = new StreamReader(fs);
             ArrayList ar = new ArrayList();
             string s;
-            while ((s = sr.ReadLine()) != null)
-            {
-                Debug.Log(s);
-                ar.Add(s);
-            }
-
+            while ((s = sr.ReadLine()) != null) ar.Add(s);
+            // 閉じ
             sr.Close();
             fs.Close();
             if(ar.Count == 0)
             {
-                Debug.Log("とりま");
                 // ファイルが有っても中身が無いときのとりあえず入れとくやつ
                 KeyConfig.Config["Jump"] = jsr.GetPlayBtn(JoyStickReceiver.PlayStationContoller.Cross);
                 KeyConfig.Config["Zone"] = jsr.GetPlayBtn(JoyStickReceiver.PlayStationContoller.L1);
             }
             else
             {
-                Debug.Log("あるやん");
                 // 設定する
                 KeyConfig.Config["Jump"] = ar[0].ToString();
                 KeyConfig.Config["Zone"] = ar[1].ToString();
@@ -80,6 +74,7 @@ public class KeyConfigSettings : MonoBehaviour {
             KeyConfig.Config["Zone"] = jsr.GetPlayBtn(JoyStickReceiver.PlayStationContoller.L1);
         }
 
+        Debug.Log("JumpButton: " + KeyConfig.Config["Jump"] + ", ZoneButton: " + KeyConfig.Config["Zone"]);
         KeyConfig.Config["Submit"] = jsr.GetPlayBtn(JoyStick_Submit);
         SetDisp("JumpBtn", KeyConfig.Config["Jump"]);
         SetDisp("ZoneBtn", KeyConfig.Config["Zone"]);
@@ -106,7 +101,6 @@ public class KeyConfigSettings : MonoBehaviour {
     // ファイルパスの設定
     void Start()
     {
-        Debug.Log(FilePath);
         Init();
         Modes();
         Modes();
@@ -114,6 +108,9 @@ public class KeyConfigSettings : MonoBehaviour {
         // セレクトの初期設定
         SelectedObj = GameObject.Find("JumpBtn");
         EventSystem.current.SetSelectedGameObject(SelectedObj);
+
+        Debug.Log(FilePath);
+
     }
 
     // キー取得
