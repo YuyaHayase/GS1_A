@@ -13,19 +13,19 @@ public class PlayerMove : MonoBehaviour {
     // ジャンプしているか
     bool jumping = false;
     float delta = 0;
-    [SerializeField,Tooltip("最低ライン")]
+    [SerializeField,Tooltip("最低ライン"), Header("最低ライン")]
     float underLine = -4;
 
     // ジャンプ力
     float jumpPower = 0;
 
-    [SerializeField, Tooltip("ジャンプ力ぅ......ですかね")]
+    [SerializeField, Tooltip("ジャンプ力ぅ......ですかね"), Header("ジャンプ力ぅ......ですかね")]
     float HighjumpPower = 0.5f;
 
-    [SerializeField, Tooltip("集中時のジャンプ力")]
+    [SerializeField, Tooltip("集中時のジャンプ力"), Header("集中時のジャンプ力")]
     float ZoneInjumpPower = 0.05f;
 
-    [SerializeField, Tooltip("重力")]
+    [SerializeField, Tooltip("重力"), Header("重力")]
     float Gravity = 9.8f;
 
     //ジョイスティック
@@ -33,13 +33,13 @@ public class PlayerMove : MonoBehaviour {
     KeyConfigSettings kcs;
 
     //ジョイスティックの制限
-    [SerializeField, Tooltip("左スティック(ボタン)の制限係数")]
+    [SerializeField, Tooltip("左スティック(ボタン)の制限係数"), Header("左スティック(ボタン)の制限係数")]
     float joyLeftAxisComp = 5.0f;
-    [SerializeField, Tooltip("右スティックの加速係数")]
+    [SerializeField, Tooltip("右スティックの加速係数"), Header("右スティックの加速係数")]
     float joyRightAxisAccel = 1.5f;
 
     // コントローラ
-    [SerializeField,Tooltip("0:PlayStation, 1:Other")]
+    [SerializeField,Tooltip("0:PlayStation, 1:Other"), Header("0:PlayStation, 1:Other")]
     int CtrlSelect = 0;
 
         // Use this for initialization
