@@ -1,1 +1,13 @@
-https://github.com/thiqxis/GS1_A/pull/37/conflict?name=ateamGame%252FAssets%252FResources%252FyCSV%252FWave.csv&ancestor_oid=1c62aa2481c3c17acc5024e255d37352b1a2a7e7&base_oid=93903303f234b2c5fd1779e6751781fcf04dbdc8&head_oid=695bb80b9d258daddd496075c43c23cb2f593331
+ID,Stage,Wave,Pos,Time,HP
+Enemy1,1,1,-30/0,0.5,30
+Enemy1,1,1,30/0,1.5,30
+Enemy1,1,1,-30/0,2.75,30
+Enemy1,1,1,30/0,3.75,30
+Enemy1,1,1,-30/0,5,30
+Enemy1,1,1,30/0,6,30
+Enemy2,1,2,-20/0.5,0.2,10
+Enemy2,1,2,20/0.5,0.2,10
+Enemy1,1,2,-30/0,2,50
+Enemy1,1,2,30/0,2,50
+Enemy1,1,2,-30/0,5,50
+Enemy1,1,2,30/0,5,50
