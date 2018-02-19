@@ -8,9 +8,8 @@ public class oEnemyMove22 : MonoBehaviour {
     bool flg = false;//falseならf(回転の数値)を増やす、trueならfを減らす
     float f;//回転の数値、少しずつ大きくしていく
     float enemyMoveDistance = 0.0f;//移動距離、値が増えれば移動距離が多くなる
-    public int x;
-
-                  // Use this for initialization
+    public float x;
+    // Use this for initialization
     void Start () {
 		
 	}

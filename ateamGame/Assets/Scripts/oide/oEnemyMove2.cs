@@ -26,8 +26,8 @@ public class oEnemyMove2 : MonoBehaviour {
                 //※必須
                 mother = obj.GetComponent<oBase>();
                 direction =  mother.Playerposition(transform.position);
+                 posflg = true;
                 //※必須
-                posflg = true;
             }
 
             if (f <= 40 && flg == false)//回転の大きさが40以下かつ、フラグがfalseなら
