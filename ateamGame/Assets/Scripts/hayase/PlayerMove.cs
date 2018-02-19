@@ -110,7 +110,7 @@ public class PlayerMove : MonoBehaviour {
                 RightY = -Input.GetAxis("Vertical R") * joyRightAxisAccel;
                 break;
             case 1:
-                RightY = -Input.GetAxis("Vertical Ru") * joyRightAxisAccel - RightX;
+                RightY = -Input.GetAxis("Vertical Ru") * joyRightAxisAccel;
 //                RightY = -Input.GetAxis("Vertical Ru") * joyRightAxisAccel;
                 break;
         }
