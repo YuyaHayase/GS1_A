@@ -8,11 +8,8 @@ public class oEnemyMove22 : MonoBehaviour {
     bool flg = false;//falseならf(回転の数値)を増やす、trueならfを減らす
     float f;//回転の数値、少しずつ大きくしていく
     float enemyMoveDistance = 0.0f;//移動距離、値が増えれば移動距離が多くなる
-    public float x;//この値だけ移動距離を足していく
-    bool posflg = false;//ポジションをとるためのフラグ
-    GameObject obj;//※必須
-    oBase mother;//※必須
-    int direction;//向き※必須
+    public int x;
+
                   // Use this for initialization
     void Start () {
 		
@@ -45,11 +42,10 @@ public class oEnemyMove22 : MonoBehaviour {
                     {
                         time = 0;//時間のカウントを0にする
                         flg = false;//フラグをfalseにする
-                        posflg = false;//※必須
                     }
                 }
             }
-            this.GetComponent<Image>().rectTransform.Rotate(0, 0, f);
+            transform.Rotate(0, 0, f);
         }
 
     }

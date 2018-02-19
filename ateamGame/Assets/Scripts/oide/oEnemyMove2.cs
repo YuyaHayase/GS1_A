@@ -14,7 +14,7 @@ public class oEnemyMove2 : MonoBehaviour {
     int direction;//向き※必須
     // Use this for initialization
     void Start () {
-        obj = GameObject.Find("GameObject");//ベースの入っているオブジェクトを取得、名前を変えて
+        obj = GameObject.Find("Difference");//ベースの入っているオブジェクトを取得、名前を変えて
     }
 	// Update is called once per frame
 	void Update () {
@@ -57,7 +57,6 @@ public class oEnemyMove2 : MonoBehaviour {
                     }
                 }
             }
-            transform.Rotate(0, 0, f);//回転
         }
 	}
 }
