@@ -52,8 +52,5 @@ public class oEnemyMove3 : MonoBehaviour {
             //yield return null;
         }
     }
-    void OnBecameInvisible()
-    {
-        Destroy(gameObject);
-    }
+
 }
