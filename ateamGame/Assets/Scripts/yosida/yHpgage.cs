@@ -51,7 +51,7 @@ public class yHpgage : MonoBehaviour {
         }
         if (Input.GetMouseButtonDown(1))
         {
-            EnemyDamage(20);
+            EnemyDamage(10);
         }
     }
 

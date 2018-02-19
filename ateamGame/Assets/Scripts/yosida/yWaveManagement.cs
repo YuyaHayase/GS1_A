@@ -32,6 +32,8 @@ public class yWaveManagement : MonoBehaviour {
     string[] enemyID;
     yCsvRender csv;
     yEnemyManager enemyManager;
+    yBandFade bandFade;
+    yTime _time;
 
     public int WaveNumber
     {
@@ -41,6 +43,8 @@ public class yWaveManagement : MonoBehaviour {
     // Use this for initialization
     void Start() {
         csv = GameObject.Find("Reference").GetComponent<yCsvRender>();
+        bandFade = GameObject.Find("Canvas/Band").GetComponent<yBandFade>();
+        _time = GameObject.Find("Time").GetComponent<yTime>();
 
         EnemyNumber((int)topRow.Wave);
 
@@ -58,8 +62,9 @@ public class yWaveManagement : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        time+=Time.deltaTime;
-        print(flgNumber);
+        if(_time.FlgTime)
+            time += Time.deltaTime;
+        print(enemyNumber[j]);
 
         if (waveNumber < 3)//ボス戦前のWave数まで
         {
@@ -102,7 +107,10 @@ public class yWaveManagement : MonoBehaviour {
                 waveNumber++;
                 time = 0;
                 if (j < 1)
+                {
                     j++;
+                    bandFade.FlgFadeIn = true;
+                }
                 else
                     flgBoss = true;
                 number = enemyNumber[j];
