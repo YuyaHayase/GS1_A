@@ -10,7 +10,13 @@ public class yTime : MonoBehaviour {
     int i,j;
     [SerializeField]
     float time = 12.00f;
-    bool flgTime = true;//falseになると一時停止
+    bool flgTime = false;//falseになると一時停止
+
+    public bool FlgTime
+    {
+        set { flgTime = value; }
+        get { return flgTime; }
+    }
 
 	// Use this for initialization
 	void Start () {
@@ -66,14 +72,10 @@ public class yTime : MonoBehaviour {
 
         #region//デバッグ用
         if (Input.GetKeyDown(KeyCode.Return) && flgTime)
-            Timer(false);
+            flgTime = false;
         else if (Input.GetKeyDown(KeyCode.Return) && !flgTime)
-            Timer(true);
+            flgTime = true;
         #endregion
     }
 
-    public void Timer(bool show)
-    {
-        flgTime = show;
-    }
 }

@@ -27,8 +27,8 @@ public class yMusicManager : MonoBehaviour {
     }
     #endregion
 
-    public enum musicChip { bgm1,bgm2,bgm3};
-    public enum soundClip { se1,se2,se3};
+    public enum MusicClip { bgm1,bgm2,bgm3};
+    public enum SoundClip { se1,se2,se3};
 
     AudioSource musicSound, soundEffect;
 
@@ -50,13 +50,13 @@ public class yMusicManager : MonoBehaviour {
 	void Update () {
         #region//デバッグ用
         if (Input.GetKeyDown(KeyCode.A))
-            MusicSound((int)musicChip.bgm1);
+            MusicSound((int)MusicClip.bgm1);
         if (Input.GetKeyDown(KeyCode.B))
-            Sound((int)soundClip.se1);
+            Sound((int)SoundClip.se1);
         if (Input.GetKeyDown(KeyCode.C))
-            Sound((int)soundClip.se2);
+            Sound((int)SoundClip.se2);
         if (Input.GetKeyDown(KeyCode.D))
-            Sound((int)soundClip.se3);
+            Sound((int)SoundClip.se3);
         if (Input.GetKeyDown(KeyCode.Space))
             MusicEffectStop();
         #endregion
