@@ -38,7 +38,13 @@ public class KeyConfigSettings : MonoBehaviour {
     {
         try
         {
+#if UNITY_EDITOR
             FilePath = Application.dataPath + "/Scenes/hayase/" + Application.unityVersion + ".txt";
+#endif
+
+#if UNITY_STANDALONE
+            FilePath = Application.dataPath + "/" + Application.unityVersion + ".txt";
+#endif
             jsr = new JoyStickReceiver();
 
             // ファイルからキー状態の設定を読み込む
@@ -170,6 +176,7 @@ public class KeyConfigSettings : MonoBehaviour {
         sw.WriteLine(KeyConfig.Config["Jump"]);
         sw.WriteLine(KeyConfig.Config["Zone"]);
         sw.WriteLine(mo);
+        sw.WriteLine(FilePath);
         sw.Close();
         fs.Close();
     }
