@@ -6,6 +6,7 @@ public class tWeakPointParent : MonoBehaviour
 {
     //当たっているか(多重判定防止)
     private bool isHit;
+    private yHpgage _yHpgage;
 
     [SerializeField, HeaderAttribute("弱点の向き(0左,1右,2下,3上)")]
     private int weakpointDir;
@@ -13,7 +14,7 @@ public class tWeakPointParent : MonoBehaviour
     //private 
     void Start()
     {
-
+        _yHpgage = transform.parent.transform.FindChild("EnemyHPgage").transform.FindChild("HPbar").GetComponent<yHpgage>();
     }
 
     void Update()
@@ -41,10 +42,12 @@ public class tWeakPointParent : MonoBehaviour
             if (dir == weakpointDir)
             {//弱点ヒット、処理をここに
                 Debug.Log("弱点HIT");
+                _yHpgage.EnemyDamage(30);
             }
             else
             {//通常ヒット、処理をここに
                 Debug.Log("通常ヒット");
+                _yHpgage.EnemyDamage(10);
             }
         }
     }

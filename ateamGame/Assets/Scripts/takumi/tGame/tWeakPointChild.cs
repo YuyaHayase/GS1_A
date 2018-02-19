@@ -11,7 +11,7 @@ public class tWeakPointChild : MonoBehaviour
     void Start()
     {
         //親オブジェクト取得
-        _tWeakPoint = transform.root.gameObject.GetComponent<tWeakPointParent>();
+        _tWeakPoint = transform.parent.gameObject.GetComponent<tWeakPointParent>();
     }
 
     void OnTriggerEnter2D(Collider2D col)
