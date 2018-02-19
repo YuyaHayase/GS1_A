@@ -13,40 +13,47 @@ public class PlayerMove : MonoBehaviour {
     // ジャンプしているか
     bool jumping = false;
     float delta = 0;
-    [SerializeField,Tooltip("最低ライン")]
+    [SerializeField,Tooltip("最低ライン"), Header("最低ライン")]
     float underLine = -4;
 
     // ジャンプ力
     float jumpPower = 0;
 
-    [SerializeField, Tooltip("ジャンプ力ぅ......ですかね")]
+    [SerializeField, Tooltip("ジャンプ力ぅ......ですかね"), Header("ジャンプ力ぅ......ですかね")]
     float HighjumpPower = 0.5f;
 
-    [SerializeField, Tooltip("集中時のジャンプ力")]
+    [SerializeField, Tooltip("集中時のジャンプ力"), Header("集中時のジャンプ力")]
     float ZoneInjumpPower = 0.05f;
 
-    [SerializeField, Tooltip("重力")]
+    [SerializeField, Tooltip("重力"), Header("重力")]
     float Gravity = 9.8f;
 
     //ジョイスティック
     JoyStickReceiver jsr;
+    KeyConfigSettings kcs;
 
     //ジョイスティックの制限
-    [SerializeField, Tooltip("左スティック(ボタン)の制限係数")]
+    [SerializeField, Tooltip("左スティック(ボタン)の制限係数"), Header("左スティック(ボタン)の制限係数")]
     float joyLeftAxisComp = 5.0f;
-    [SerializeField, Tooltip("右スティックの加速係数")]
+    [SerializeField, Tooltip("右スティックの加速係数"), Header("右スティックの加速係数")]
     float joyRightAxisAccel = 1.5f;
 
-    // Use this for initialization
+    // コントローラ
+    [SerializeField,Tooltip("0:PlayStation, 1:Other"), Header("0:PlayStation, 1:Other")]
+    int CtrlSelect = 0;
+
+        // Use this for initialization
     void Start () {
         // 子オブジェクトの取得
         _child = transform.FindChild("humer").gameObject;
 
         jsr = new JoyStickReceiver();
-	}
-	
-	// Update is called once per frame
-	void Update () {
+        kcs = new KeyConfigSettings();
+        kcs.Init();
+    }
+
+    // Update is called once per frame
+    void Update () {
         float py = 0;
         /*
         y = Vo*t - (g*t^2)/2
@@ -56,15 +63,15 @@ public class PlayerMove : MonoBehaviour {
         */
 
         // 集中時以外武器の判定を消す
-        if (Input.GetKey(jsr.GetPlayBtn(JoyStickReceiver.PlayStationContoller.L1))) _child.SetActive(true);
+        if (KeyConfig.GetKey("Zone")) _child.SetActive(true);
         else _child.SetActive(false);
         
         // ×ボタンが押されたら
-        if (Input.GetKeyDown(jsr.GetPlayBtn(JoyStickReceiver.PlayStationContoller.Cross))) jumping=true;
+        if (KeyConfig.GetKey("Jump")) jumping=true;
         if (jumping)
         {
             // 集中時ゆっくりになる？やつ
-            if (Input.GetKey(jsr.GetPlayBtn(JoyStickReceiver.PlayStationContoller.L1)))
+            if (KeyConfig.GetKey("Zone"))
             {
                 jumpPower = ZoneInjumpPower;
                 delta += Time.deltaTime / 15.0f;
@@ -76,7 +83,7 @@ public class PlayerMove : MonoBehaviour {
             }
 
             py = jumpPower - (Gravity * Mathf.Pow(delta, 2) / 2);
-            Debug.Log(py);
+            //Debug.Log(py);
         }
 
         // 最低ラインにキたら
@@ -89,13 +96,24 @@ public class PlayerMove : MonoBehaviour {
         }
 
         // アクシスの調整 左ステック
+        if (Input.GetAxis("Vertical") > 0.8f) jumping = true;
         if (Input.GetAxis("Horizontal") == 0) Axis.x = Input.GetAxis("The Cross Key LeftRight") / joyLeftAxisComp;
         else Axis.x = Input.GetAxis("Horizontal") / joyLeftAxisComp;
         transform.position += new Vector3(Axis.x, py, 0);
 
         // アクシスの調整 右ステック
         float RightX = Input.GetAxis("Horizontal R") * joyRightAxisAccel;
-        float RightY = -Input.GetAxis("Vertical R") * joyRightAxisAccel;
+        float RightY = -Input.GetAxis("Vertical R") * joyRightAxisAccel; ;
+        switch (KeyConfigSettings.mo)
+        {
+            case 0:
+                RightY = -Input.GetAxis("Vertical R") * joyRightAxisAccel;
+                break;
+            case 1:
+                RightY = -Input.GetAxis("Vertical Ru") * joyRightAxisAccel - RightX;
+//                RightY = -Input.GetAxis("Vertical Ru") * joyRightAxisAccel;
+                break;
+        }
 
         // 武器の座標
         _child.transform.position = new Vector3(transform.position.x + RightX,
