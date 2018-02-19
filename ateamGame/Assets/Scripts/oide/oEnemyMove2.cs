@@ -7,17 +7,29 @@ public class oEnemyMove2 : MonoBehaviour {
     bool flg = false;//falseならf(回転の数値)を増やす、trueならfを減らす
     float f;//回転の数値、少しずつ大きくしていく
     float enemyMoveDistance　= 0.0f;//移動距離、値が増えれば移動距離が多くなる
-    public float x = 0.001f;//この値だけ移動距離を足していく
+    public float x;//この値だけ移動距離を足していく
+    bool posflg = false;//ポジションをとるためのフラグ
+    GameObject obj;//※必須
+    oBase mother;//※必須
+    int direction;//向き※必須
     // Use this for initialization
     void Start () {
-		
-	}
-	
+        obj = GameObject.Find("GameObject");//ベースの入っているオブジェクトを取得、名前を変えて
+    }
 	// Update is called once per frame
 	void Update () {
         time += Time.deltaTime;
         if(time > 2)//2秒後
         {
+            if(posflg == false)
+            {
+                //※必須
+                mother = obj.GetComponent<oBase>();
+                direction =  mother.Playerposition(transform.position);
+                //※必須
+                posflg = true;
+            }
+
             if (f <= 40 && flg == false)//回転の大きさが40以下かつ、フラグがfalseなら
             {
                 f += 0.1f;//回転の大きさを増やす
@@ -32,7 +44,7 @@ public class oEnemyMove2 : MonoBehaviour {
                 {
                     f -= 0.1f;//減らしていく
                     enemyMoveDistance += x;//移動する値を増やしていく
-                    transform.position = new Vector3(transform.position.x + enemyMoveDistance, transform.position.y, transform.position.z);//移動
+                    transform.position = new Vector3(transform.position.x + enemyMoveDistance * direction, transform.position.y, transform.position.z);//移動
                 }
                 else
                 {
@@ -41,6 +53,7 @@ public class oEnemyMove2 : MonoBehaviour {
                     {
                         time = 0;//時間のカウントを0にする
                         flg = false;//フラグをfalseにする
+                        posflg = false;//※必須
                     }
                 }
             }
