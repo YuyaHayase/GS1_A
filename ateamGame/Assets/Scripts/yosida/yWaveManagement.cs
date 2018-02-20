@@ -243,12 +243,14 @@ public class yWaveManagement : MonoBehaviour {
         yield return new WaitForSeconds(1.0f);
 
         yield return StartCoroutine("BossPerformance");
-        yield return StartCoroutine("BossPerformanceText");
-        yield return new WaitForSeconds(1.0f);
 
         SpriteRenderer boss;
         boss = Instantiate(this.bossType, enemyPos[i], Quaternion.identity) as SpriteRenderer;
         boss.name = enemyID[i] + number;
+
+        yield return StartCoroutine("BossPerformanceText");
+        yield return new WaitForSeconds(1.0f);
+
 
         yield break;
     }
@@ -278,7 +280,6 @@ public class yWaveManagement : MonoBehaviour {
     IEnumerator BossPerformanceText()
     {
         Text[] text = new Text[6];
-
         for (int i = 0; i < text.Length; i++)
         {
             int j = i + 1;

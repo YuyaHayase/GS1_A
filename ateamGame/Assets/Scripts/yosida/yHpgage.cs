@@ -9,7 +9,7 @@ public class yHpgage : MonoBehaviour {
     GameObject parent;
     Image hpGage, redGage;
 
-    [SerializeField,Header("ここから設定するならPlayer専用")]
+    [SerializeField,Header("PlayerHP専用")]
     int hp = 150;
     int maxHP;
     [SerializeField,Header("HPのゲージが減る時間")]
@@ -34,14 +34,8 @@ public class yHpgage : MonoBehaviour {
         //親オブジェクト取得
         parent = transform.root.gameObject;
 
-        try
-        {
-            waveManagement = GameObject.Find("Wave").GetComponent<yWaveManagement>();
-        }
-        catch(Exception e)
-        {
-            print("見つからない");
-        }
+        waveManagement = GameObject.Find("Wave").GetComponent<yWaveManagement>();
+
         //要はEnemyの時
         if (parent.name != "Canvas")
         {
@@ -102,7 +96,7 @@ public class yHpgage : MonoBehaviour {
             //HPgageが少しずつ減っていく
             if (hpGage.fillAmount > remaining)
             {
-                hpGage.fillAmount -= 0.01f;
+                hpGage.fillAmount -= hpGageDecrease;
             }
             else
             {
@@ -122,7 +116,7 @@ public class yHpgage : MonoBehaviour {
         {
             if (hpGage.fillAmount < redGage.fillAmount)
             {
-                redGage.fillAmount -= 0.01f;
+                redGage.fillAmount -= redGageDecrease;
             }
             else
             {
