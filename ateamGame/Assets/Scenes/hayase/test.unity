@@ -473,6 +473,11 @@ Prefab:
       propertyPath: IsDebug
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114394853874933526, guid: 50ee216c09990a54996c7a9b109606c2,
+        type: 2}
+      propertyPath: CtrlSelect
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 50ee216c09990a54996c7a9b109606c2, type: 2}
   m_IsPrefabParent: 0
