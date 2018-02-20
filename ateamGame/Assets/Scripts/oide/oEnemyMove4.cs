@@ -16,13 +16,16 @@ public class oEnemyMove4 : MonoBehaviour {//ランダム移動
     }
 	// Update is called once per frame
 	void Update () {
-        if (enemyAttack == 1)
+        if (transform.tag == "enemy")
         {
-            oEnemymove4_pattern1();
-        }
-        else
-        {
-            oEnemymove4_pattern3(enemyAttack);
+            if (enemyAttack == 1)
+            {
+                oEnemymove4_pattern1();
+            }
+            else
+            {
+                oEnemymove4_pattern3(enemyAttack);
+            }
         }
     }
     public void oEnemymove4_pattern1()//移動

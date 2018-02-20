@@ -18,42 +18,45 @@ public class oEnemyMove2 : MonoBehaviour {
     }
 	// Update is called once per frame
 	void Update () {
-        time += Time.deltaTime;
-        if(time > 2)//2秒後
+        if (transform.tag == "enemy")
         {
-            if(posflg == false)
+            time += Time.deltaTime;
+            if (time > 2)//2秒後
             {
-                //※必須
-                mother = obj.GetComponent<oBase>();
-                direction =  mother.Playerposition(transform.position);
-                 posflg = true;
-                //※必須
-            }
-
-            if (f <= 40 && flg == false)//回転の大きさが40以下かつ、フラグがfalseなら
-            {
-                f += 0.1f;//回転の大きさを増やす
-            }
-            else//回転の大きさが40を超えたら
-            {
-                flg = true;//減らすためにフラグをtrueにする
-            }
-            if (flg == true)//フラグがtrueなら
-            {
-                if (f >= 0)//回転の大きさが0以上なら
+                if (posflg == false)
                 {
-                    f -= 0.1f;//減らしていく
-                    enemyMoveDistance += x;//移動する値を増やしていく
-                    transform.position = new Vector3(transform.position.x + enemyMoveDistance * direction, transform.position.y, transform.position.z);//移動
+                    //※必須
+                    mother = obj.GetComponent<oBase>();
+                    direction = mother.Playerposition(transform.position);
+                    posflg = true;
+                    //※必須
                 }
-                else
+
+                if (f <= 40 && flg == false)//回転の大きさが40以下かつ、フラグがfalseなら
                 {
-                    enemyMoveDistance -= x;//移動する値を減らしていく
-                    if (enemyMoveDistance <= 1)//移動距離が0以下になったら
+                    f += 0.1f;//回転の大きさを増やす
+                }
+                else//回転の大きさが40を超えたら
+                {
+                    flg = true;//減らすためにフラグをtrueにする
+                }
+                if (flg == true)//フラグがtrueなら
+                {
+                    if (f >= 0)//回転の大きさが0以上なら
                     {
-                        time = 0;//時間のカウントを0にする
-                        flg = false;//フラグをfalseにする
-                        posflg = false;//※必須
+                        f -= 0.1f;//減らしていく
+                        enemyMoveDistance += x;//移動する値を増やしていく
+                        transform.position = new Vector3(transform.position.x + enemyMoveDistance * direction, transform.position.y, transform.position.z);//移動
+                    }
+                    else
+                    {
+                        enemyMoveDistance -= x;//移動する値を減らしていく
+                        if (enemyMoveDistance <= 1)//移動距離が0以下になったら
+                        {
+                            time = 0;//時間のカウントを0にする
+                            flg = false;//フラグをfalseにする
+                            posflg = false;//※必須
+                        }
                     }
                 }
             }

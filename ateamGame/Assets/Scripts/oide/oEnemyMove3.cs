@@ -14,17 +14,20 @@ public class oEnemyMove3 : MonoBehaviour {
     bool posflg = false;
     // Use this for initialization
     void Start () {
-        obj = GameObject.Find("GameObject");//ベースの入っているオブジェクトを取得、名前を変えて
+        obj = GameObject.Find("Difference");//ベースの入っているオブジェクトを取得、名前を変えて
+
     }
 	
 	// Update is called once per frame
 	void Update () {
-        time += Time.deltaTime;
-        if(time >= attackTime)
+        if (transform.tag == "enemy")
         {
-            StartCoroutine("Enemymove3");
-        }
-        
+            time += Time.deltaTime;
+            if (time >= attackTime)
+            {
+                StartCoroutine("Enemymove3");
+            }
+         }
 	}
     IEnumerator Enemymove3()
     {

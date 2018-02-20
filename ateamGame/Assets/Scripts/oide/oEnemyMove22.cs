@@ -16,35 +16,38 @@ public class oEnemyMove22 : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        time += Time.deltaTime;
-        if(time >= 2)
+        if (GameObject.FindWithTag("enemy"))
         {
-            if (f <= 40 && flg == false)//回転の大きさが40以下かつ、フラグがfalseなら
+            time += Time.deltaTime;
+            if (time >= 2)
             {
-                f += 0.1f;//回転の大きさを増やす
-            }
-            else//回転の大きさが40を超えたら
-            {
-                flg = true;//減らすためにフラグをtrueにする
-            }
-            if (flg == true)//フラグがtrueなら
-            {
-                if (f >= 0)//回転の大きさが0以上なら
+                if (f <= 40 && flg == false)//回転の大きさが40以下かつ、フラグがfalseなら
                 {
-                    f -= 0.1f;//減らしていく
-                    enemyMoveDistance += x;//移動する値を増やしていく
+                    f += 0.1f;//回転の大きさを増やす
                 }
-                else
+                else//回転の大きさが40を超えたら
                 {
-                    enemyMoveDistance -= x;//移動する値を減らしていく
-                    if (enemyMoveDistance <= 1)//移動距離が0以下になったら
+                    flg = true;//減らすためにフラグをtrueにする
+                }
+                if (flg == true)//フラグがtrueなら
+                {
+                    if (f >= 0)//回転の大きさが0以上なら
                     {
-                        time = 0;//時間のカウントを0にする
-                        flg = false;//フラグをfalseにする
+                        f -= 0.1f;//減らしていく
+                        enemyMoveDistance += x;//移動する値を増やしていく
+                    }
+                    else
+                    {
+                        enemyMoveDistance -= x;//移動する値を減らしていく
+                        if (enemyMoveDistance <= 1)//移動距離が0以下になったら
+                        {
+                            time = 0;//時間のカウントを0にする
+                            flg = false;//フラグをfalseにする
+                        }
                     }
                 }
+                transform.Rotate(0, 0, f);
             }
-            transform.Rotate(0, 0, f);
         }
 
     }
