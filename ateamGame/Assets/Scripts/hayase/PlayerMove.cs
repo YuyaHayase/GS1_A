@@ -38,11 +38,7 @@ public class PlayerMove : MonoBehaviour {
     [SerializeField, Tooltip("右スティックの加速係数"), Header("右スティックの加速係数")]
     float joyRightAxisAccel = 1.5f;
 
-    // コントローラ
-    [SerializeField,Tooltip("0:PlayStation, 1:Other"), Header("0:PlayStation, 1:Other")]
-    int CtrlSelect = 0;
-
-        // Use this for initialization
+    // Use this for initialization
     void Start () {
         // 子オブジェクトの取得
         _child = transform.FindChild("humer").gameObject;
@@ -63,7 +59,7 @@ public class PlayerMove : MonoBehaviour {
         */
 
         // 集中時以外武器の判定を消す
-        if (KeyConfig.GetKey("Zone")) _child.SetActive(true);
+        if (KeyConfig.GetKey("Zone") || Input.GetKey(KeyCode.LeftShift)) _child.SetActive(true);
         else _child.SetActive(false);
         
         // ×ボタンが押されたら
@@ -71,7 +67,7 @@ public class PlayerMove : MonoBehaviour {
         if (jumping)
         {
             // 集中時ゆっくりになる？やつ
-            if (KeyConfig.GetKey("Zone"))
+            if (KeyConfig.GetKey("Zone") || Input.GetKey(KeyCode.LeftShift))
             {
                 jumpPower = ZoneInjumpPower;
                 delta += Time.deltaTime / 15.0f;
