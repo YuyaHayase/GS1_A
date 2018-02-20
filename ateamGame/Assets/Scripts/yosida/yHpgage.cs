@@ -12,6 +12,16 @@ public class yHpgage : MonoBehaviour {
     [SerializeField,Header("ここから設定するならPlayer専用")]
     int hp = 150;
     int maxHP;
+    [SerializeField,Header("HPのゲージが減る時間")]
+    float hpGageSpeed = 0.01f;
+    [SerializeField, Header("HPのゲージのfillAmountが減っていく値")]
+    float hpGageDecrease = 0.01f;
+
+    [SerializeField,Header("赤ゲージが減る時間")]
+    float redGageSpeed = 0.01f;
+    [SerializeField, Header("赤ゲージのfillAmountが減っていく値")]
+    float redGageDecrease = 0.01f;
+
 
     yEnemyManager enemyManager;
     yWaveManagement waveManagement;
@@ -57,7 +67,7 @@ public class yHpgage : MonoBehaviour {
 
     public void PlayerDamage(int x)
     {
-        if (parent.name == "Canvas")
+        if (parent.tag != "enemy")
         {
             StopCoroutine("DamageCoroutine");
             StopCoroutine("ComboEnd");
@@ -67,7 +77,7 @@ public class yHpgage : MonoBehaviour {
 
     public void EnemyDamage(int x)
     {
-        if (parent.name != "Canvas")
+        if (parent.tag == "enemy")
         {
             StopCoroutine("DamageCoroutine");
             StopCoroutine("ComboEnd");
@@ -84,6 +94,8 @@ public class yHpgage : MonoBehaviour {
         {
             if (hpGage.fillAmount <= 0)
             {
+                if(parent.tag == "enemy")
+                    parent.tag = "deathEnemy";
                 yield return StartCoroutine("ComboEnd");
                 break;
             }
@@ -97,7 +109,7 @@ public class yHpgage : MonoBehaviour {
                 yield return StartCoroutine("ComboEnd");
                 break;
             }
-            yield return new WaitForSeconds(0.01f);
+            yield return new WaitForSeconds(hpGageSpeed);
         }
         yield break;
     }
@@ -118,16 +130,16 @@ public class yHpgage : MonoBehaviour {
                 break;
             }
 
-            if(redGage.fillAmount == 0)
+            if(redGage.fillAmount <= 0)
             {
-                if (parent.name != "Canvas")
+                if (parent.tag == "deathEnemy")
                 {
                     waveManagement.enemyNumber[waveManagement.WaveNumber - 1]--;
                     Destroy(parent.gameObject);
                 }
 
             }
-            yield return new WaitForSeconds(0.01f);
+            yield return new WaitForSeconds(redGageSpeed);
         }
         yield break;
     }

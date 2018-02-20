@@ -21,24 +21,27 @@ public class oEnemyMove1 : MonoBehaviour{
     // Update is called once per frame
     void Update()//コサインの値を変更させて移動
     {
-        time += Time.deltaTime;
-        if (time >= 2.0f)//2秒間隔
+        if (transform.tag == "enemy")
         {
-            if (posflg == false)
+            time += Time.deltaTime;
+            if (time >= 2.0f)//2秒間隔
             {
-                //※必須
-                mother = obj.GetComponent<oBase>();
-                direction = mother.Playerposition(transform.position);
-                //※必須
-                posflg = true;
-            }
-            cos += 0.1f;//コサインの値を増やす
-            transform.Translate(movement * direction, Mathf.Cos(cos) * 0.5f, 0);//山なりに移動
-            if (transform.position.y <= 0)//自身のY座標が0未満になったとき
-            {
-                posflg = false;
-                cos = 0;//コサインの値を0にする
-                time = 0;
+                if (posflg == false)
+                {
+                    //※必須
+                    mother = obj.GetComponent<oBase>();
+                    direction = mother.Playerposition(transform.position);
+                    //※必須
+                    posflg = true;
+                }
+                cos += 0.1f;//コサインの値を増やす
+                transform.Translate(movement * direction, Mathf.Cos(cos) * 0.5f, 0);//山なりに移動
+                if (transform.position.y <= 0)//自身のY座標が0未満になったとき
+                {
+                    posflg = false;
+                    cos = 0;//コサインの値を0にする
+                    time = 0;
+                }
             }
         }
     }
@@ -47,6 +50,5 @@ public class oEnemyMove1 : MonoBehaviour{
         //tagか何かで判定できるといいかもしれない
         cos = 0;//コサインの値を0にする
         time = 0;
-
     }
 }

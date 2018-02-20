@@ -5,12 +5,15 @@ using UnityEngine.UI;
 
 public class yCombo : MonoBehaviour {
 
+    [SerializeField,Header("コンボの数を表示")]
     Sprite[] number;
+
     Image[] comboNumber = new Image[3];
     Image[] characterImage = new Image[5];
+
     int comboScore = 0;
     float time = 0;
-    float alpha = 1.0f;
+    float alpha = 0.0f;
 
     public int ComboScore
     {
@@ -20,15 +23,25 @@ public class yCombo : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        number = Resources.LoadAll<Sprite>("yResources/Number");
+        if(number.Length == 0)
+            number = Resources.LoadAll<Sprite>("yResources/Number");
         comboNumber[0] = GameObject.Find("ComboNumber1").GetComponent<Image>();
         comboNumber[1] = GameObject.Find("ComboNumber2").GetComponent<Image>();
         comboNumber[2] = GameObject.Find("ComboNumber3").GetComponent<Image>();
+
+        for(int i = 0;i < comboNumber.Length; i++)
+        {
+            comboNumber[i].color = new Color
+                (comboNumber[i].color.r, comboNumber[i].color.g, comboNumber[i].color.b, 0);
+
+        }
 
         for (int i = 0; i < characterImage.Length; i++)
         {
             int j = i + 1;
             characterImage[i] = transform.FindChild("Character" + j).gameObject.GetComponent<Image>();
+            characterImage[i].color = new Color(
+                characterImage[i].color.r, characterImage[i].color.g, characterImage[i].color.b, 0);
         }
         comboNumber[1].enabled = false;
         comboNumber[2].enabled = false;
