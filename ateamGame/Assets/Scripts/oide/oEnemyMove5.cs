@@ -7,21 +7,26 @@ public class oEnemyMove5 : MonoBehaviour {
     public GameObject bullet;//弾
     GameObject bulletInstance;
     GameObject player;
-    float angle = 0.0f;//プレイヤーと自身(Enemy)の角度
+    public float angle = 0.0f;//プレイヤーと自身(Enemy)の角度
     float time = 0.0f;
+    //float att2Time = 0.0f;
+    int attackStyle = 1;
+    //int count = 0;
     public int min;//角度の最小値
     public int max;//角度の最大値
-    public int way;//拡散弾をいくつに分けるか
+    public float way;//拡散弾をいくつに分けるか
     public int enemyMode = 1;//Playerをロックオンするかしないかの判定。1ならする、2ならしない。
-    int [] ii = new int[30];//何度間隔で弾を配置するかの記憶場所
+    float [] ii = new float[50];//何度間隔で弾を配置するかの記憶場所
     float x, y;//ベクトルx.y
+    
     // Use this for initialization
     void Start () {
+        
         player = GameObject.Find("Player");//使うときはPlayerに変える
-        if(enemyMode == 1)
-        {
-            BulletAngle(transform.position, player.transform.position);//角度を計算するメソッドに値を入れる
-        }
+        //if(enemyMode == 1)
+        //{
+        //    BulletAngle(transform.position, player.transform.position);//角度を計算するメソッドに値を入れる
+        //}
         if(max  == Mathf.Abs(min))//maxとminの絶対値の値が同じなら
         {
             ii[0] = min;//0番に最小値を記憶
@@ -51,10 +56,40 @@ public class oEnemyMove5 : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        time += Time.deltaTime;
-        if(time >= 3)
+        if (transform.tag == "enemy")
         {
-            if(way == 1)//1wayの時
+            if (enemyMode == 1)
+            {
+                BulletAngle(transform.position, player.transform.position);//角度を計算するメソッドに値を入れる
+            }
+            switch (attackStyle)
+            {
+                case 1:
+                    oEnemymove5_Att1();
+                    break;
+                    //case 2:
+                    //    time += Time.deltaTime;
+                    //    if(time >= 3)
+                    //    {
+                    //        oEnemymove5_Att2();
+                    //    }
+                    //    break;
+            }
+        }
+    }
+    float BulletAngle(Vector2 bullerPos, Vector2 playerPos)//タンジェントを使い、弾の向きを変える
+    {
+        x = bullerPos.x - playerPos.x;
+        y = bullerPos.y - playerPos.y;
+        angle = Mathf.Atan2(y, x) * Mathf.Rad2Deg;//角度を求める
+        return angle;//値(角度)を返す 
+    }
+    public void oEnemymove5_Att1()
+    {
+        time += Time.deltaTime;
+        if (time >= 3)
+        {
+            if (way == 1)//1wayの時
             {
                 bulletInstance = Instantiate(bullet) as GameObject;
                 bulletInstance.transform.rotation = Quaternion.Euler(0, 0, 0 + angle - 180);
@@ -65,26 +100,42 @@ public class oEnemyMove5 : MonoBehaviour {
                 for (int i = 0; i < way; i++)
                 {
                     bulletInstance = Instantiate(bullet) as GameObject;
-                    if(enemyMode == 1)
+                    if (enemyMode == 1)
                     {
                         bulletInstance.transform.rotation = Quaternion.Euler(0, 0, ii[i] + angle - 180);
                     }
                     else
                     {
-                        bulletInstance.transform.rotation = Quaternion.Euler(0, 0, ii[i] + angle );
+                        bulletInstance.transform.rotation = Quaternion.Euler(0, 0, ii[i] + angle);
                     }
                     bulletInstance.transform.position = new Vector3(transform.position.x, transform.position.y, 0);//弾を配置
                 }
             }
-
             time = 0;
         }
     }
-    float BulletAngle(Vector2 bullerPos, Vector2 playerPos)//タンジェントを使い、弾の向きを変える
-    {
-        x = bullerPos.x - playerPos.x;
-        y = bullerPos.y - playerPos.y;
-        angle = Mathf.Atan2(y, x) * Mathf.Rad2Deg;//角度を求める
-        return angle;//値(角度)を返す 
-    }
+    //失敗作
+    //void oEnemymove5_Att2()
+    //{
+    //    att2Time += Time.deltaTime;
+    //    if(att2Time >= 0.0005f)
+    //    {
+    //        bulletInstance = Instantiate(bullet) as GameObject;
+    //        if (enemyMode == 1)
+    //        {
+    //            bulletInstance.transform.rotation = Quaternion.Euler(0, 0, ii[count] + angle - 180);
+    //        }
+    //        else
+    //        {
+    //            bulletInstance.transform.rotation = Quaternion.Euler(0, 0, ii[count] + angle);
+    //        }
+    //        bulletInstance.transform.position = new Vector3(transform.position.x, transform.position.y, 0);//弾を配置
+    //        count += 1;
+    //    }
+    //    if(count == way)
+    //    {
+    //        count = 0;
+    //        time = 0;
+    //    }
+    //}
 }

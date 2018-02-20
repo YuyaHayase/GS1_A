@@ -15,20 +15,23 @@ public class oEnemyMove6 : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if(flg == false)
+        if (transform.tag == "enemy")
         {
-            playerPosition = GameObject.Find("Enemy1");
-            if(playerPosition.transform.position.x > transform.position.x)
+            if (flg == false)
             {
-                i = 1;
+                playerPosition = GameObject.Find("Player");
+                if (playerPosition.transform.position.x > transform.position.x)
+                {
+                    i = 1;
+                }
+                else
+                {
+                    i = -1;
+                }
+                flg = true;
             }
-            else
-            {
-                i = -1;
-            }
-            flg = true;
+            oEnemymove6();
         }
-        oEnemymove6();
 	}
     void oEnemymove6()
     {
