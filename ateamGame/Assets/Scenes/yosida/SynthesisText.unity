@@ -365,6 +365,36 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114236316506737148, guid: 829c3c6d1814e8046ac24763cba76d83,
+        type: 2}
+      propertyPath: m_Color.a
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114580708258413940, guid: 829c3c6d1814e8046ac24763cba76d83,
+        type: 2}
+      propertyPath: m_Color.a
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114439372346889562, guid: 829c3c6d1814e8046ac24763cba76d83,
+        type: 2}
+      propertyPath: m_Color.a
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114369664284185046, guid: 829c3c6d1814e8046ac24763cba76d83,
+        type: 2}
+      propertyPath: m_Color.a
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114544903561766524, guid: 829c3c6d1814e8046ac24763cba76d83,
+        type: 2}
+      propertyPath: m_Color.a
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114065827736564334, guid: 829c3c6d1814e8046ac24763cba76d83,
+        type: 2}
+      propertyPath: m_Color.a
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 829c3c6d1814e8046ac24763cba76d83, type: 2}
   m_IsPrefabParent: 0
@@ -510,6 +540,11 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 114705080004377214, guid: d2657a028eed35c419394f46def48611,
+        type: 2}
+      propertyPath: number.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 224101783661530644, guid: d2657a028eed35c419394f46def48611,
         type: 2}
       propertyPath: m_LocalPosition.x
@@ -624,6 +659,11 @@ Prefab:
         type: 2}
       propertyPath: time
       value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: 114980194382981744, guid: d2657a028eed35c419394f46def48611,
+        type: 2}
+      propertyPath: redGageSpeed
+      value: 0.001
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d2657a028eed35c419394f46def48611, type: 2}

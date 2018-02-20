@@ -448,6 +448,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 828e19318b618534b86b593258d99b81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  time: 12
 --- !u!114 &114344111514666078
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -940,6 +941,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hp: 150
+  hpGageSpeed: 0.01
+  redGageSpeed: 0.01
 --- !u!222 &222036541736419990
 CanvasRenderer:
   m_ObjectHideFlags: 1
