@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class KeyConfig : MonoBehaviour {
+public class hKeyConfig : MonoBehaviour {
 
     // キーコンフィグの設定情報
     public static Dictionary<string, string> Config

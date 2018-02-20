@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class JoyStickReceiver : MonoBehaviour {
+public class hJoyStickReceiver : MonoBehaviour {
 
     [SerializeField, Tooltip("デバック")]
     private bool IsDebug = true;

@@ -5,10 +5,10 @@ using UnityEngine.UI;
 using System.IO;
 using UnityEngine.EventSystems;
 
-public class KeyConfigSettings : MonoBehaviour {
+public class hKeyConfigSettings : MonoBehaviour {
 
     // どのボタンが押されたかのクラス
-    JoyStickReceiver jsr;
+    hJoyStickReceiver jsr;
 
     // ReciveKey、キーを変更するか
     bool rKey = false;
@@ -26,7 +26,7 @@ public class KeyConfigSettings : MonoBehaviour {
     public static int mo;
 
     [SerializeField, Tooltip("選択等をさせるための決定ボタン"), Header("選択等をさせるための決定ボタン")]
-    private JoyStickReceiver.PlayStationContoller JoyStick_Submit = JoyStickReceiver.PlayStationContoller.Square;
+    private hJoyStickReceiver.PlayStationContoller JoyStick_Submit = hJoyStickReceiver.PlayStationContoller.Square;
 
     // コントローラで決定ボタンを押した際の一瞬でボタンが決定されないようにするためのやつ
     int ctrlmode = 0;
@@ -45,7 +45,7 @@ public class KeyConfigSettings : MonoBehaviour {
 #if UNITY_STANDALONE
             FilePath = Application.dataPath + "/" + Application.unityVersion + ".txt";
 #endif
-            jsr = new JoyStickReceiver();
+            jsr = new hJoyStickReceiver();
 
             // ファイルからキー状態の設定を読み込む
             FileStream fs = new FileStream(FilePath, FileMode.OpenOrCreate);
@@ -59,14 +59,14 @@ public class KeyConfigSettings : MonoBehaviour {
             if(ar.Count == 0)
             {
                 // ファイルが有っても中身が無いときのとりあえず入れとくやつ
-                KeyConfig.Config["Jump"] = jsr.GetPlayBtn(JoyStickReceiver.PlayStationContoller.Cross);
-                KeyConfig.Config["Zone"] = jsr.GetPlayBtn(JoyStickReceiver.PlayStationContoller.L1);
+                hKeyConfig.Config["Jump"] = jsr.GetPlayBtn(hJoyStickReceiver.PlayStationContoller.Cross);
+                hKeyConfig.Config["Zone"] = jsr.GetPlayBtn(hJoyStickReceiver.PlayStationContoller.L1);
             }
             else
             {
                 // 設定する
-                KeyConfig.Config["Jump"] = ar[0].ToString();
-                KeyConfig.Config["Zone"] = ar[1].ToString();
+                hKeyConfig.Config["Jump"] = ar[0].ToString();
+                hKeyConfig.Config["Zone"] = ar[1].ToString();
                 mo = int.Parse(ar[2].ToString());
             }
 
@@ -76,14 +76,14 @@ public class KeyConfigSettings : MonoBehaviour {
         {
             Debug.Log(e.Message + "エラー");
             // エラー出たらとりあえず入れる
-            KeyConfig.Config["Jump"] = jsr.GetPlayBtn(JoyStickReceiver.PlayStationContoller.Cross);
-            KeyConfig.Config["Zone"] = jsr.GetPlayBtn(JoyStickReceiver.PlayStationContoller.L1);
+            hKeyConfig.Config["Jump"] = jsr.GetPlayBtn(hJoyStickReceiver.PlayStationContoller.Cross);
+            hKeyConfig.Config["Zone"] = jsr.GetPlayBtn(hJoyStickReceiver.PlayStationContoller.L1);
         }
 
-        Debug.Log("JumpButton: " + KeyConfig.Config["Jump"] + ", ZoneButton: " + KeyConfig.Config["Zone"]);
-        KeyConfig.Config["Submit"] = jsr.GetPlayBtn(JoyStick_Submit);
-        SetDisp("JumpBtn", KeyConfig.Config["Jump"]);
-        SetDisp("ZoneBtn", KeyConfig.Config["Zone"]);
+        Debug.Log("JumpButton: " + hKeyConfig.Config["Jump"] + ", ZoneButton: " + hKeyConfig.Config["Zone"]);
+        hKeyConfig.Config["Submit"] = jsr.GetPlayBtn(JoyStick_Submit);
+        SetDisp("JumpBtn", hKeyConfig.Config["Jump"]);
+        SetDisp("ZoneBtn", hKeyConfig.Config["Zone"]);
     }
 
     // キー表示
@@ -101,7 +101,7 @@ public class KeyConfigSettings : MonoBehaviour {
     // キーを入れる
     private void SetKey(string keycode)
     {
-        KeyConfig.Config[keycode] = jsr.ControlButtonKeys();
+        hKeyConfig.Config[keycode] = jsr.ControlButtonKeys();
     }
 
     // ファイルパスの設定
@@ -139,14 +139,14 @@ public class KeyConfigSettings : MonoBehaviour {
          * ジャンプボタン( Playstation4 DualShock でいう ×ボタン)
          * で選択を解除している。
         */
-        if (KeyConfig.GetKeyDown("Submit"))
+        if (hKeyConfig.GetKeyDown("Submit"))
         {
             if(EventSystem.current.currentSelectedGameObject != null)
             SelectedObj = EventSystem.current.currentSelectedGameObject;
             EventSystem.current.SetSelectedGameObject(SelectedObj);
         }
-        if (KeyConfig.GetKeyUp("Submit") || Input.GetMouseButtonUp(0)) ctrlmode = 2;
-        if (KeyConfig.GetKeyDown("Jump"))
+        if (hKeyConfig.GetKeyUp("Submit") || Input.GetMouseButtonUp(0)) ctrlmode = 2;
+        if (hKeyConfig.GetKeyDown("Jump"))
         {
             EventSystem.current.SetSelectedGameObject(null);
             if (ctrlmode == 2) ctrlmode = 0;
@@ -173,8 +173,8 @@ public class KeyConfigSettings : MonoBehaviour {
     {
         FileStream fs = new FileStream(FilePath, FileMode.OpenOrCreate);
         StreamWriter sw = new StreamWriter(fs);
-        sw.WriteLine(KeyConfig.Config["Jump"]);
-        sw.WriteLine(KeyConfig.Config["Zone"]);
+        sw.WriteLine(hKeyConfig.Config["Jump"]);
+        sw.WriteLine(hKeyConfig.Config["Zone"]);
         sw.WriteLine(mo);
         sw.WriteLine(FilePath);
         sw.Close();

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMove : MonoBehaviour {
+public class hPlayerMove : MonoBehaviour {
 
     // アナログスティック
     Vector2 Axis;
@@ -29,8 +29,8 @@ public class PlayerMove : MonoBehaviour {
     float Gravity = 9.8f;
 
     //ジョイスティック
-    JoyStickReceiver jsr;
-    KeyConfigSettings kcs;
+    hJoyStickReceiver jsr;
+    hKeyConfigSettings kcs;
 
     //ジョイスティックの制限
     [SerializeField, Tooltip("左スティック(ボタン)の制限係数"), Header("左スティック(ボタン)の制限係数")]
@@ -43,8 +43,8 @@ public class PlayerMove : MonoBehaviour {
         // 子オブジェクトの取得
         _child = transform.FindChild("humer").gameObject;
 
-        jsr = new JoyStickReceiver();
-        kcs = new KeyConfigSettings();
+        jsr = new hJoyStickReceiver();
+        kcs = new hKeyConfigSettings();
         kcs.Init();
     }
 
@@ -59,15 +59,15 @@ public class PlayerMove : MonoBehaviour {
         */
 
         // 集中時以外武器の判定を消す
-        if (KeyConfig.GetKey("Zone") || Input.GetKey(KeyCode.LeftShift)) _child.SetActive(true);
+        if (hKeyConfig.GetKey("Zone") || Input.GetKey(KeyCode.LeftShift)) _child.SetActive(true);
         else _child.SetActive(false);
         
         // ×ボタンが押されたら
-        if (KeyConfig.GetKey("Jump")) jumping=true;
+        if (hKeyConfig.GetKey("Jump")) jumping=true;
         if (jumping)
         {
             // 集中時ゆっくりになる？やつ
-            if (KeyConfig.GetKey("Zone") || Input.GetKey(KeyCode.LeftShift))
+            if (hKeyConfig.GetKey("Zone") || Input.GetKey(KeyCode.LeftShift))
             {
                 jumpPower = ZoneInjumpPower;
                 delta += Time.deltaTime / 15.0f;
@@ -100,7 +100,7 @@ public class PlayerMove : MonoBehaviour {
         // アクシスの調整 右ステック
         float RightX = Input.GetAxis("Horizontal R") * joyRightAxisAccel;
         float RightY = -Input.GetAxis("Vertical R") * joyRightAxisAccel; ;
-        switch (KeyConfigSettings.mo)
+        switch (hKeyConfigSettings.mo)
         {
             case 0:
                 RightY = -Input.GetAxis("Vertical R") * joyRightAxisAccel;
