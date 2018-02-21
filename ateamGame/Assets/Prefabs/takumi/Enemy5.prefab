@@ -78,7 +78,7 @@ GameObject:
   - component: {fileID: 114581861191799952}
   m_Layer: 0
   m_Name: Enemy5
-  m_TagString: Untagged
+  m_TagString: enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -521,6 +521,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hp: 150
+  hpGageSpeed: 0.01
+  hpGageDecrease: 0.01
+  redGageSpeed: 0.01
+  redGageDecrease: 0.01
 --- !u!114 &114297176659000632
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -532,6 +536,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69404437e5a53a74694ef65044123ef3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  timeXross: 0
 --- !u!114 &114323306932002096
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -568,6 +573,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bullet: {fileID: 1386693840262200, guid: 99b4cb14c531a314aa045a3c015d35eb, type: 2}
+  angle: 0
   min: 0
   max: 0
   way: 1
